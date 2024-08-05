@@ -1,3 +1,5 @@
+// src/components/common/Footer.jsx
+
 import React from 'react';
 
 const footerStyle = {
@@ -6,6 +8,9 @@ const footerStyle = {
   textAlign: 'center',
   padding: '20px',
   borderTop: '4px solid #F7931E', // Orange border
+  position: 'relative',
+  bottom: 0,
+  width: '100%',
 };
 
 const paragraphStyle = {
