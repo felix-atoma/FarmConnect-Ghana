@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import LanguageSwitcher from './LanguageSwitcher'; // Ensure correct import
+import LanguageSwitcher from './LanguageSwitcher';
+import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
 
 const navbarStyle = {
   backgroundColor: '#71B34A', // Green background
@@ -49,6 +50,7 @@ const langDropdownStyle = {
 
 const Navbar = () => {
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const { isAuthenticated, userRole } = useContext(AuthContext); // Use AuthContext
 
   const toggleLangMenu = () => {
     setIsLangMenuOpen(!isLangMenuOpen);
@@ -61,10 +63,17 @@ const Navbar = () => {
       </div>
       <ul style={linksStyle}>
         <li><Link to="/" style={linkStyle}>Home</Link></li>
-        <li><Link to="/login" style={linkStyle}>Login</Link></li>
-        <li><Link to="/register" style={linkStyle}>Register</Link></li>
-        <li><Link to="/farmer/dashboard" style={linkStyle}>Farmer Dashboard</Link></li>
-        <li><Link to="/customer/dashboard" style={linkStyle}>Customer Dashboard</Link></li>
+        {!isAuthenticated ? (
+          <>
+            <li><Link to="/login" style={linkStyle}>Login</Link></li>
+            <li><Link to="/register" style={linkStyle}>Register</Link></li>
+          </>
+        ) : (
+          <>
+            {userRole === 'farmer' && <li><Link to="/farmer/dashboard" style={linkStyle}>Farmer Dashboard</Link></li>}
+            {userRole === 'customer' && <li><Link to="/customer/dashboard" style={linkStyle}>Customer Dashboard</Link></li>}
+          </>
+        )}
       </ul>
       <div className="navbar-lang-switcher" style={{ position: 'relative' }}>
         <button onClick={toggleLangMenu} style={langButtonStyle}>
