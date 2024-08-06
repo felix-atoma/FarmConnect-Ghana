@@ -1,30 +1,14 @@
-// src/contexts/AuthContext.jsx
+import React, { createContext, useState } from 'react';
 
-import React, { createContext, useState, useEffect } from 'react';
-import { checkTokenValidity } from '../services/Auth'; // Adjust the path if necessary
+export const AuthContext = createContext();
 
-// Example of context setup
-const AuthContext = createContext();
-
-const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const verifyToken = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const isValid = await checkTokenValidity(token);
-        setIsAuthenticated(isValid);
-      }
-    };
-    verifyToken();
-  }, []);
+  const [userRole, setUserRole] = useState('');
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, userRole, setUserRole }}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-export { AuthContext, AuthProvider };
+}

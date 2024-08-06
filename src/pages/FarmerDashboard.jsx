@@ -1,8 +1,7 @@
 // src/components/FarmerDashboard.jsx
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
-
-import MapContainer from '../components/common/MapContainer';
+import MapContainer from '../components/farmers/MapComponent'
 
 const FarmerDashboard = () => {
   const farmLocation = { lat: 37.7749, lng: -122.4194 }; // Example location
@@ -30,7 +29,7 @@ const FarmerDashboard = () => {
 const dashboardContainerStyle = { display: 'flex' };
 const navStyle = { width: '200px', backgroundColor: '#f4f4f4', padding: '20px' };
 const navListStyle = { listStyleType: 'none', padding: '0' };
-const navLinkStyle = { textDecoration: 'none', color: '#007BFF', display: 'block', padding: '10px' };
+const navLinkStyle = { textDecoration: 'none', color: '#333', display: 'block', padding: '10px 0' };
 const mainStyle = { flex: 1, padding: '20px' };
 
 export default FarmerDashboard;

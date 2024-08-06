@@ -1,18 +1,22 @@
-// src/components/common/PrivateRoute.jsx
+import React, { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
-import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
-import useAuth from '../../hooks/UseAuth'; // Ensure this path is correct
+function PrivateRoute({ element, ...rest }) {
+  const { isAuthenticated, userRole } = useContext(AuthContext);
 
-const PrivateRoute = ({ element: Component, ...rest }) => {
-  const { user } = useAuth(); // Use the hook here
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
-  return (
-    <Route
-      {...rest}
-      element={user ? Component : <Navigate to="/login" />}
-    />
-  );
-};
+  // Redirect based on userRole
+  if (userRole === 'farmer') {
+    return <Navigate to="/farmer-dashboard" replace />;
+  } else if (userRole === 'customer') {
+    return <Navigate to="/customer-dashboard" replace />;
+  }
+
+  return element;
+}
 
 export default PrivateRoute;
