@@ -69,19 +69,47 @@ const Navbar = () => {
         <img src="/path-to-your-logo.png" alt="FarmConnect Ghana" style={logoStyle} />
       </div>
       <ul style={linksStyle}>
-        <li><Link to="/" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>Home</Link></li>
+        <li>
+          <Link to="/" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
+            Home
+          </Link>
+        </li>
         {!isAuthenticated ? (
           <>
-            <li><Link to="/login" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>Login</Link></li>
-            <li><Link to="/register" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>Register</Link></li>
+            <li>
+              <Link to="/login" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link to="/initial-screen" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
+                Register
+              </Link>
+            </li>
           </>
         ) : (
           <>
-            {userRole === 'farmer' && <li><Link to="/farmer/dashboard" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>Farmer Dashboard</Link></li>}
-            {userRole === 'customer' && <li><Link to="/customer/dashboard" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>Customer Dashboard</Link></li>}
+            {userRole === 'farmer' && (
+              <li>
+                <Link to="/farmer/dashboard" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
+                  Farmer Dashboard
+                </Link>
+              </li>
+            )}
+            {userRole === 'customer' && (
+              <li>
+                <Link to="/customer/dashboard" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
+                  Customer Dashboard
+                </Link>
+              </li>
+            )}
           </>
         )}
-        <li><Link to="/cart" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}><FaShoppingCart /> Cart</Link></li>
+        <li>
+          <Link to="/cart" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
+            <FaShoppingCart /> Cart
+          </Link>
+        </li>
       </ul>
       <div className="navbar-lang-switcher" style={{ position: 'relative' }}>
         <button onClick={toggleLangMenu} style={langButtonStyle}>

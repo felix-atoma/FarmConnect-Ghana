@@ -1,5 +1,3 @@
-// src/App.jsx
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
@@ -21,6 +19,7 @@ import PurchaseInquiries from './components/farmers/PurchaseInquiries';
 import ProductManagement from './components/farmers/ProductManagement';
 import Footer from './components/common/Footer';
 import CartPage from './pages/CartPage';
+import InitialScreen from './pages/InitialScreen';
 
 const rootStyle = {
   display: 'flex',
@@ -55,6 +54,7 @@ const App = () => {
                 <Route path="/product-management" element={<ProductManagement />} />
                 <Route path="/purchase-inquiries" element={<PurchaseInquiries />} />
                 <Route path="/cart" element={<CartPage />} />
+                <Route path="/initial-screen" element={<InitialScreen />} />
               </Routes>
             </main>
             <Footer />
