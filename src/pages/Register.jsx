@@ -1,9 +1,10 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { FaUserAlt, FaSeedling, FaShoppingCart } from 'react-icons/fa'; // Icons for farmer and customer
+import { useLocation, useNavigate } from 'react-router-dom';
+import { FaSeedling, FaShoppingCart } from 'react-icons/fa';
 
 const Register = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const role = queryParams.get('role'); // Get the role from query parameters
 
@@ -11,6 +12,20 @@ const Register = () => {
     if (role === 'farmer') return 'Register as Farmer';
     if (role === 'customer') return 'Register as Customer';
     return 'Register'; // Default title
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Implement form submission logic here (e.g., API call)
+
+    // Redirect based on role after successful registration
+    if (role === 'farmer') {
+      navigate('/farmer-profile'); // Redirect to Farmer Profile
+    } else if (role === 'customer') {
+      navigate('/customer-profile'); // Redirect to Customer Profile
+    } else {
+      navigate('/profile'); // Redirect to default profile or another page
+    }
   };
 
   return (
@@ -26,7 +41,7 @@ const Register = () => {
               {getTitle()}
             </h1>
           </div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: '1rem' }}>
               <label style={{ display: 'block', color: '#4A4A4A', fontSize: '0.875rem', fontWeight: 'bold', marginBottom: '0.5rem' }} htmlFor="firstName">
                 First Name
