@@ -20,6 +20,7 @@ import ProductManagement from './components/farmers/ProductManagement';
 import Footer from './components/common/Footer';
 import CartPage from './pages/CartPage';
 import InitialScreen from './pages/InitialScreen';
+import MessageHolder from './pages/MessageHolder';
 
 const rootStyle = {
   display: 'flex',
@@ -55,6 +56,8 @@ const App = () => {
                 <Route path="/purchase-inquiries" element={<PurchaseInquiries />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/initial-screen" element={<InitialScreen />} />
+                <Route path="/message-holder" element={<MessageHolder/>} />
+                
               </Routes>
             </main>
             <Footer />
