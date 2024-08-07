@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
-import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
+import { AuthContext } from '../../context/AuthContext'; 
 import { FaShoppingCart } from 'react-icons/fa'; // Import cart icon
 
 const navbarStyle = {

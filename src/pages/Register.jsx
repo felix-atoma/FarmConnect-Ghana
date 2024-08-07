@@ -1,65 +1,64 @@
-// src/components/Register.jsx
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaSeedling, FaShoppingCart } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 const Register = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const queryParams = new URLSearchParams(location.search);
-  const role = queryParams.get('role'); // Get the role from query parameters
+  const [role, setRole] = useState(''); // State for role, set based on user selection
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const getTitle = () => {
-    if (role === 'farmer') return 'Register as Farmer';
-    if (role === 'customer') return 'Register as Customer';
-    return 'Register'; // Default title
-  };
-
-  const getTestimonial = () => {
-    if (role === 'farmer') {
-      return `"As a farmer, joining FarmConnect Ghana has greatly increased my market reach and sales. The platform is intuitive and connects me with buyers effectively."`;
-    } else if (role === 'customer') {
-      return `"FarmConnect Ghana has made it easy for me to find fresh produce from local farmers. The user interface is smooth, and the delivery service is top-notch!"`;
-    }
-    return `"FarmConnect Ghana offers an excellent platform for connecting farmers and customers. It's a game-changer for anyone involved in agriculture!"`; // Default testimonial
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Implement form submission logic here (e.g., API call)
-    console.log('Form submitted'); // Debug log
-    console.log('Role:', role); // Debug log
 
-    // Redirect based on role after successful registration
-    if (role === 'farmer') {
-      console.log('Redirecting to Farmer Dashboard'); // Debug log
-      navigate('/farmer-dashboard'); // Redirect to Farmer Dashboard
-    } else if (role === 'customer') {
-      console.log('Redirecting to Customer Dashboard'); // Debug log
-      navigate('/customer-dashboard'); // Redirect to Customer Dashboard
-    } else {
-      console.log('Redirecting to default profile'); // Debug log
-      navigate('/profile'); // Redirect to default profile or another page
+    try {
+      // Example API call for registration - replace with your actual API call
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstName, lastName, email, password, role }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+
+      const data = await response.json();
+      
+      // Assume the role is included in the response data or handle accordingly
+      const userRole = data.role; 
+
+      // Redirect to the appropriate dashboard based on the role
+      if (userRole === 'farmer') {
+        navigate('/farmer-dashboard'); // Redirect to Farmer Dashboard
+      } else if (userRole === 'customer') {
+        navigate('/customer-dashboard'); // Redirect to Customer Dashboard
+      } else {
+        navigate('/'); // Redirect to home or another page if role is not specified
+      }
+    } catch (error) {
+      console.error('Registration error:', error); // Handle error and provide feedback
     }
   };
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Left Side - Image and Testimonial */}
       <div style={{ flex: 1, backgroundImage: 'url(/path-to-your-image.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '0.5rem', position: 'relative' }}>
-        {/* Image Container */}
         <div style={{ position: 'absolute', bottom: '20px', left: '20px', backgroundColor: '#FFFFFF', padding: '10px', borderRadius: '0.5rem', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-          {/* Testimonial */}
           <p style={{ margin: 0, color: '#4A4A4A', fontSize: '0.875rem', maxWidth: '300px' }}>
-            {getTestimonial()}
+            {role === 'farmer'
+              ? `"As a farmer, joining FarmConnect Ghana has greatly increased my market reach and sales. The platform is intuitive and connects me with buyers effectively."`
+              : `"FarmConnect Ghana has made it easy for me to find fresh produce from local farmers. The user interface is smooth, and the delivery service is top-notch!"`}
           </p>
           <p style={{ margin: 0, color: '#7D7D7D', fontSize: '0.75rem', marginTop: '5px' }}>
             - Happy User
           </p>
         </div>
       </div>
-      {/* Right Side - Form */}
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', backgroundColor: '#F7F9FC' }}>
         <div style={{ maxWidth: '400px', width: '100%', backgroundColor: '#FFFFFF', borderRadius: '0.5rem', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', padding: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
@@ -67,7 +66,7 @@ const Register = () => {
               {role === 'farmer' ? <FaSeedling size={24} color="#4A4A4A" /> : <FaShoppingCart size={24} color="#4A4A4A" />}
             </div>
             <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-              {getTitle()}
+              Register as {role === 'farmer' ? 'Farmer' : 'Customer'}
             </h1>
           </div>
           <form onSubmit={handleSubmit}>
@@ -82,6 +81,8 @@ const Register = () => {
                 placeholder="First Name"
                 style={{ width: '100%', padding: '0.75rem', border: '1px solid #D1D5DB', borderRadius: '0.375rem', boxSizing: 'border-box' }}
                 required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
             <div style={{ marginBottom: '1rem' }}>
@@ -95,6 +96,8 @@ const Register = () => {
                 placeholder="Last Name"
                 style={{ width: '100%', padding: '0.75rem', border: '1px solid #D1D5DB', borderRadius: '0.375rem', boxSizing: 'border-box' }}
                 required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
             <div style={{ marginBottom: '1rem' }}>
@@ -108,6 +111,8 @@ const Register = () => {
                 placeholder="Email"
                 style={{ width: '100%', padding: '0.75rem', border: '1px solid #D1D5DB', borderRadius: '0.375rem', boxSizing: 'border-box' }}
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div style={{ marginBottom: '1rem' }}>
@@ -121,6 +126,8 @@ const Register = () => {
                 placeholder="Password"
                 style={{ width: '100%', padding: '0.75rem', border: '1px solid #D1D5DB', borderRadius: '0.375rem', boxSizing: 'border-box' }}
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div style={{ marginBottom: '1rem' }}>
@@ -143,11 +150,6 @@ const Register = () => {
               </button>
             </div>
           </form>
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
-            <p style={{ margin: 0, color: '#4A4A4A', fontSize: '0.875rem' }}>
-              Already have an account? <Link to="/login" style={{ color: '#71B34A', textDecoration: 'none', fontWeight: 'bold' }}>Login here</Link>.
-            </p>
-          </div>
         </div>
       </div>
     </div>
