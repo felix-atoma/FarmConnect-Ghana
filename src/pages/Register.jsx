@@ -47,7 +47,7 @@ const Register = () => {
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <div style={{ flex: 1, backgroundImage: 'url(/path-to-your-image.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '0.5rem', position: 'relative' }}>
+      <div style={{ flex: 1, backgroundImage: 'url(src/assets/ladyImage.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '0.5rem', position: 'relative' }}>
         <div style={{ position: 'absolute', bottom: '20px', left: '20px', backgroundColor: '#FFFFFF', padding: '10px', borderRadius: '0.5rem', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <p style={{ margin: 0, color: '#4A4A4A', fontSize: '0.875rem', maxWidth: '300px' }}>
             {role === 'farmer'
