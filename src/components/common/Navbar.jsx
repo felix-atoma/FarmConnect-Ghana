@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { FaGlobe } from 'react-icons/fa'; // Import world map icon
 import LanguageSwitcher from './LanguageSwitcher';
 import { AuthContext } from '../../context/AuthContext'; 
-import { FaShoppingCart } from 'react-icons/fa'; // Import cart icon
 
 const navbarStyle = {
   backgroundColor: '#71B34A', // Green background
@@ -37,11 +37,11 @@ const linkHoverStyle = {
 };
 
 const langButtonStyle = {
-  backgroundColor: '#FFFFFF', // White background
-  color: '#71B34A', // Green text color
+  backgroundColor: 'transparent', // No background for icon button
   border: 'none',
-  padding: '10px 15px',
   cursor: 'pointer',
+  fontSize: '20px', // Adjust icon size
+  color: '#FFFFFF', // White color for the icon
 };
 
 const langDropdownStyle = {
@@ -58,10 +58,23 @@ const langDropdownStyle = {
 const Navbar = () => {
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const { isAuthenticated, userRole } = useContext(AuthContext); // Use AuthContext
+  const langMenuRef = useRef(null);
 
   const toggleLangMenu = () => {
     setIsLangMenuOpen(!isLangMenuOpen);
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (langMenuRef.current && !langMenuRef.current.contains(event.target)) {
+        setIsLangMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <nav style={navbarStyle}>
@@ -105,15 +118,10 @@ const Navbar = () => {
             )}
           </>
         )}
-        <li>
-          <Link to="/cart" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
-            <FaShoppingCart /> Cart
-          </Link>
-        </li>
       </ul>
-      <div className="navbar-lang-switcher" style={{ position: 'relative' }}>
+      <div className="navbar-lang-switcher" style={{ position: 'relative' }} ref={langMenuRef}>
         <button onClick={toggleLangMenu} style={langButtonStyle}>
-          Language
+          <FaGlobe />
         </button>
         {isLangMenuOpen && (
           <div style={langDropdownStyle}>

@@ -1,4 +1,4 @@
-// src/components/Customer/InquiryForm.jsx
+
 import React, { useState } from 'react';
 
 const InquiryForm = ({ farmerId }) => {
@@ -10,7 +10,7 @@ const InquiryForm = ({ farmerId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle inquiry submission
+    
     alert(`Inquiry sent to farmer ${farmerId}`);
   };
 
@@ -28,7 +28,7 @@ const InquiryForm = ({ farmerId }) => {
   );
 };
 
-// Inline CSS styles
+
 const formStyle = { display: 'flex', flexDirection: 'column', gap: '10px' };
 const textareaStyle = { padding: '10px', borderRadius: '5px', border: '1px solid #ddd', width: '100%' };
 const buttonStyle = { padding: '10px', borderRadius: '5px', backgroundColor: '#71B34A', color: '#fff', border: 'none' };

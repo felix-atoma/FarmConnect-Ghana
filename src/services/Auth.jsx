@@ -1,6 +1,6 @@
-// src/services/Auth.jsx
 
-// Define the checkTokenValidity function
+
+
 export const checkTokenValidity = async (token) => {
   try {
     const response = await fetch('/api/check-token', {
@@ -20,11 +20,10 @@ export const checkTokenValidity = async (token) => {
   }
 };
 
-// Optionally, you can export other functions or default exports
-// Example AuthService.js
+
 const login = async (formData) => {
   try {
-    // Replace with actual API call
+    
     const response = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

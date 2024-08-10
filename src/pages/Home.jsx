@@ -1,22 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MapContainer from '../components/common/MapContainer';
-import { FaSms, FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaHome, FaUser } from 'react-icons/fa';
-import { MdMessage, MdClose } from 'react-icons/md';
+import { FaSms, FaMapMarkerAlt } from 'react-icons/fa';
+import { MdSearch } from 'react-icons/md';
+import MessageHolder from './MessageHolder';
 
 const Home = () => {
   const [showCard, setShowCard] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [message, setMessage] = useState({ name: '', email: '', message: '' });
   const navigate = useNavigate();
 
   const locations = [
-    { lat: 5.6037, lng: -0.1870 }, 
+    { lat: 5.6037, lng: -0.1870 },
     { lat: 5.6038, lng: -0.1871 }
   ];
   const center = { lat: 5.6037, lng: -0.1870 };
 
+  const agriculturalItems = [
+    'Tomatoes', 'Potatoes', 'Onions', 'Cabbage', 'Carrots', 'Lettuce', 'Spinach', 'Beans', 
+    'Corn', 'Garlic', 'Ginger', 'Peppers', 'Eggplants', 'Cucumbers', 'Pumpkins', 'Zucchini', 
+    'Sweet Potatoes', 'Radishes', 'Beets', 'Okra', 'Kale', 'Broccoli', 'Cauliflower', 
+    'Green Beans', 'Brussels Sprouts', 'Turnips', 'Squash', 'Chard', 'Asparagus', 
+    'Artichokes', 'Cattle', 'Goats', 'Sheep', 'Pigs', 'Chickens', 'Turkeys', 'Ducks', 
+    'Geese', 'Rabbits', 'Horses', 'Donkeys', 'Alpacas', 'Llamas', 'Bees', 'Fish', 
+    'Pigeons', 'Quail', 'Guinea Fowl', 'Emus', 'Ostriches'
+  ];
+
+  useEffect(() => {
+    if (searchQuery) {
+      const filteredSuggestions = agriculturalItems.filter(item =>
+        item.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchQuery]);
+
   const handleSmsClick = () => {
+    console.log('SMS button clicked');
     setShowCard(!showCard);
-    console.log('SMS Clicked, Show Card:', !showCard);
+    console.log('Show card state:', !showCard);
   };
 
   const handleContactSupportClick = () => {
@@ -24,187 +50,214 @@ const Home = () => {
   };
 
   const handleFarmerDashboardClick = () => {
-    navigate('/farmer-dashboard'); // Replace with the actual route for the farmer dashboard
+    navigate('/farmer-dashboard');
   };
 
   const handleCustomerDashboardClick = () => {
-    navigate('/customer-dashboard'); // Replace with the actual route for the customer dashboard
+    navigate('/customer-dashboard');
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    console.log('Search submitted:', searchQuery);
+  };
+
+  const handleGeolocationClick = () => {
+    navigate('/regions');
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    navigate(`/product/${encodeURIComponent(suggestion)}`);
+    setSearchQuery('');
+    setSuggestions([]);
   };
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh' }}>
-      <h1>Welcome to FarmConnect Ghana</h1>
-      <MapContainer locations={locations} center={center} />
-      
-      <div
-        onClick={handleSmsClick}
-        style={{
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          backgroundColor: '#71B34A',
-          borderRadius: '50%',
-          padding: '10px',
-          cursor: 'pointer',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-          zIndex: 1000, // Ensure it is above other content
-        }}
-      >
-        <FaSms size={24} color="#FFFFFF" />
-        <div style={{ color: '#FFFFFF', fontSize: '0.75rem', textAlign: 'center', marginTop: '5px' }}>
-          Support Team
-        </div>
-      </div>
-      
-      {showCard && (
-        <div
-          style={{
-            position: 'fixed',
-            bottom: '80px',
-            right: '20px',
-            backgroundColor: '#FFFFFF',
-            borderRadius: '0.5rem',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-            width: '300px',
-            padding: '20px',
-            display: 'flex',
-            flexDirection: 'column',
-            zIndex: 1000, // Ensure it is above other content
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div style={{ width: '50px' }}></div> {/* Placeholder for logo if needed */}
-            <MdClose 
-              size={24} 
-              style={{ cursor: 'pointer' }} 
-              onClick={() => setShowCard(false)} 
-            />
-          </div>
-          <div style={{ marginBottom: '10px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <img src="https://via.placeholder.com/50" alt="Support Team" style={{ borderRadius: '50%', marginRight: '10px' }} />
-              <img src="https://via.placeholder.com/50" alt="Support Team" style={{ borderRadius: '50%', marginRight: '10px' }} />
-              <img src="https://via.placeholder.com/50" alt="Support Team" style={{ borderRadius: '50%' }} />
-            </div>
-            <h3>Hello, [User's Name]!</h3>
-            <p>How may we help you?</p>
-          </div>
-          <div
-            style={{
-              backgroundColor: '#71B34A',
-              color: '#FFFFFF',
-              padding: '10px',
-              borderRadius: '0.5rem',
-              cursor: 'pointer',
+    <div style={{ position: 'relative', minHeight: '100vh', padding: '20px' }}>
+      <header style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <div style={{ 
+          backgroundColor: '#71B34A', 
+          height: '33vh', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          borderRadius: '8px',
+          marginBottom: '20px',
+          padding: '20px'
+        }}>
+          <div 
+            onClick={handleGeolocationClick} 
+            style={{ 
+              marginBottom: '10px', 
+              cursor: 'pointer', 
+              color: '#FFFFFF', 
+              display: 'flex', 
+              alignItems: 'center',
+              gap: '5px',
+              fontSize: '1.2rem'
             }}
-            onClick={handleContactSupportClick} 
           >
-            <MdMessage size={20} /> Contact Support
+            <FaMapMarkerAlt />
+            Find Regions
+          </div>
+
+          <h2 style={{ color: '#FFFFFF', marginBottom: '10px' }}>Search for every farming produce in Ghana</h2>
+          <form onSubmit={handleSearchSubmit} style={{ 
+            display: 'flex', 
+            alignItems: 'center',
+            backgroundColor: '#FFFFFF',
+            padding: '10px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            position: 'relative'
+          }}>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="I am looking for..."
+              style={{ 
+                padding: '10px', 
+                borderRadius: '4px', 
+                border: '1px solid #ddd', 
+                flex: '1' 
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                padding: '10px',
+                backgroundColor: '#71B34A',
+                color: '#FFFFFF',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <MdSearch size={20} style={{ marginRight: '5px' }} />
+              Search
+            </button>
+            {suggestions.length > 0 && (
+              <ul style={{
+                listStyle: 'none',
+                padding: 0,
+                margin: '10px 0 0',
+                width: '100%',
+                backgroundColor: '#FFFFFF',
+                borderRadius: '4px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                position: 'absolute',
+                top: '100%',
+                left: 0,
+                zIndex: 1
+              }}>
+                {suggestions.map((suggestion, index) => (
+                  <li 
+                    key={index} 
+                    style={{
+                      padding: '10px',
+                      borderBottom: '1px solid #ddd',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.3s ease',
+                    }}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F7931E'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </form>
+        </div>
+      </header>
+
+      <section style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <h2>Featured Products</h2>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
+          <div
+            style={{ 
+              width: '200px', 
+              backgroundColor: '#F5F5F5', 
+              padding: '10px', 
+              borderRadius: '8px',
+              transition: 'transform 0.3s ease, background-color 0.3s ease',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.backgroundColor = '#E0E0E0';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.backgroundColor = '#F5F5F5';
+            }}
+            onClick={() => navigate('/product/produce-1')} // Example click handler
+          >
+            <img src="https://via.placeholder.com/200" alt="Product 1" style={{ width: '100%', borderRadius: '8px' }} />
+            <h3>Product 1</h3>
+            <p>Description of Product 1.</p>
+          </div>
+
+          <div
+            style={{ 
+              width: '200px', 
+              backgroundColor: '#F5F5F5', 
+              padding: '10px', 
+              borderRadius: '8px',
+              transition: 'transform 0.3s ease, background-color 0.3s ease',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.backgroundColor = '#E0E0E0';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.backgroundColor = '#F5F5F5';
+            }}
+            onClick={() => navigate('/product/produce-2')} // Example click handler
+          >
+            <img src="https://via.placeholder.com/200" alt="Product 2" style={{ width: '100%', borderRadius: '8px' }} />
+            <h3>Product 2</h3>
+            <p>Description of Product 2.</p>
           </div>
         </div>
-      )}
+      </section>
 
-      {/* Social Media Sidebar */}
-      <div
-        style={{
-          position: 'fixed',
-          right: '0',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          backgroundColor: '#71B34A', // Green background
-          borderRadius: '0.5rem',
-          padding: '10px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-          zIndex: 1000, // Ensure it is above other content
-        }}
-      >
-        <a
-          href="https://facebook.com/yourprofile" // Replace with your Facebook profile link
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ margin: '10px 0', color: '#3b5998' }} // Facebook color
-        >
-          <FaFacebook size={30} />
-        </a>
-        <a
-          href="https://twitter.com/yourprofile" // Replace with your Twitter profile link
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ margin: '10px 0', color: '#1DA1F2' }} // Twitter blue
-        >
-          <FaTwitter size={30} />
-        </a>
-        <a
-          href="https://instagram.com/yourprofile" // Replace with your Instagram profile link
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ margin: '10px 0', color: '#C13584' }} // Instagram pink
-        >
-          <FaInstagram size={30} />
-        </a>
-        <a
-          href="https://linkedin.com/in/yourprofile" // Replace with your LinkedIn profile link
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ margin: '10px 0', color: '#0077B5' }} // LinkedIn blue
-        >
-          <FaLinkedin size={30} />
-        </a>
-      </div>
+      <section>
+        <MapContainer locations={locations} center={center} />
+      </section>
 
-      {/* Dashboard Selection Cards */}
-      <div style={{
-        position: 'fixed',
-        bottom: '20px',
-        left: '20px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        zIndex: 1000 // Ensure it is above other content
-      }}>
-        <div 
-          onClick={handleFarmerDashboardClick}
+      {showCard && <MessageHolder />}
+      
+      <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
+        <button
+          onClick={handleSmsClick}
           style={{
-            backgroundColor: '#71B34A',
+            backgroundColor: '#F7931E',
             color: '#FFFFFF',
-            padding: '20px',
-            borderRadius: '0.5rem',
-            cursor: 'pointer',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '50px',
+            height: '50px',
             display: 'flex',
+            justifyContent: 'center',
             alignItems: 'center',
-            gap: '10px',
-            transition: 'transform 0.3s ease',
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-        >
-          <FaHome size={24} color="#FFFFFF" />
-          <span>Farmer Dashboard</span>
-        </div>
-        <div 
-          onClick={handleCustomerDashboardClick}
-          style={{
-            backgroundColor: '#FFA500',
-            color: '#FFFFFF',
-            padding: '20px',
-            borderRadius: '0.5rem',
             cursor: 'pointer',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            transition: 'transform 0.3s ease',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
         >
-          <FaUser size={24} color="#FFFFFF" />
-          <span>Customer Dashboard</span>
-        </div>
+          <FaSms size={24} />
+        </button>
       </div>
     </div>
   );

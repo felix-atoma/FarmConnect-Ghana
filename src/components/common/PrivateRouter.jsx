@@ -9,7 +9,7 @@ function PrivateRoute({ element, ...rest }) {
     return <Navigate to="/login" replace />;
   }
 
-  // Redirect based on userRole
+
   if (userRole === 'farmer') {
     return <Navigate to="/farmer-dashboard" replace />;
   } else if (userRole === 'customer') {

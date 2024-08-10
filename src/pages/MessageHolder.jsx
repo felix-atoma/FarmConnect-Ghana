@@ -45,24 +45,26 @@ const MessageHolder = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', padding: '20px', backgroundColor: '#F9FAFB' }}>
-      <h1 style={{ color: '#71B34A' }}>Message Holder</h1>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: '#F9FAFB', padding: '20px' }}>
+      <h1 style={{ color: '#71B34A', marginBottom: '20px' }}>Messages</h1>
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
           backgroundColor: '#FFFFFF',
           padding: '20px',
-          borderRadius: '0.5rem',
-          flex: 1,
-          overflowY: 'auto',
+          borderRadius: '12px',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          width: '100%',
+          maxWidth: '600px',
+          overflowY: 'auto',
+          marginBottom: '20px'
         }}
       >
         {messages.map((message) => (
-          <div key={message.id} style={{ marginBottom: '10px', padding: '10px', backgroundColor: '#F9FAFB', borderRadius: '0.5rem', position: 'relative', border: '1px solid #D1D5DB' }}>
-            <p>{message.text}</p>
-            <div style={{ position: 'absolute', top: '10px', right: '10px', display: 'flex', gap: '5px' }}>
+          <div key={message.id} style={{ marginBottom: '10px', padding: '15px', backgroundColor: '#F9FAFB', borderRadius: '8px', position: 'relative', border: '1px solid #D1D5DB' }}>
+            <p style={{ margin: 0 }}>{message.text}</p>
+            <div style={{ position: 'absolute', top: '10px', right: '10px', display: 'flex', gap: '8px' }}>
               <MdEdit
                 size={20}
                 color="#FFA500"
@@ -79,20 +81,20 @@ const MessageHolder = () => {
           </div>
         ))}
       </div>
-      <div style={{ marginTop: '20px' }}>
+      <div style={{ width: '100%', maxWidth: '600px' }}>
         {editingMessageId !== null ? (
           <div>
             <textarea
               value={editingMessageText}
               onChange={(e) => setEditingMessageText(e.target.value)}
               rows="3"
-              style={{ width: '100%', padding: '10px', borderRadius: '0.5rem', border: '1px solid #D1D5DB', marginBottom: '10px' }}
+              style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #D1D5DB', marginBottom: '10px' }}
             />
             <button
               onClick={handleUpdateMessage}
-              style={{ backgroundColor: '#71B34A', color: '#FFFFFF', padding: '10px', borderRadius: '0.5rem', cursor: 'pointer', display: 'flex', alignItems: 'center', border: 'none' }}
+              style={{ backgroundColor: '#71B34A', color: '#FFFFFF', padding: '10px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', border: 'none', width: '100%', maxWidth: '150px', margin: '0 auto' }}
             >
-              <MdSend size={20} /> Update Message
+              <MdSend size={20} style={{ marginRight: '5px' }} /> Update Message
             </button>
           </div>
         ) : (
@@ -101,13 +103,13 @@ const MessageHolder = () => {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               rows="3"
-              style={{ width: '100%', padding: '10px', borderRadius: '0.5rem', border: '1px solid #D1D5DB', marginBottom: '10px' }}
+              style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #D1D5DB', marginBottom: '10px' }}
             />
             <button
               onClick={handleSendMessage}
-              style={{ backgroundColor: '#71B34A', color: '#FFFFFF', padding: '10px', borderRadius: '0.5rem', cursor: 'pointer', display: 'flex', alignItems: 'center', border: 'none' }}
+              style={{ backgroundColor: '#71B34A', color: '#FFFFFF', padding: '10px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', border: 'none', width: '100%', maxWidth: '150px', margin: '0 auto' }}
             >
-              <MdSend size={20} /> Send Message
+              <MdSend size={20} style={{ marginRight: '5px' }} /> Send Message
             </button>
           </div>
         )}
@@ -116,6 +118,8 @@ const MessageHolder = () => {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
+          width: '100%',
+          maxWidth: '600px',
           marginTop: '20px',
         }}
       >
@@ -125,30 +129,36 @@ const MessageHolder = () => {
             backgroundColor: '#71B34A',
             color: '#FFFFFF',
             padding: '10px',
-            borderRadius: '0.5rem',
+            borderRadius: '8px',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             border: 'none',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+            width: '100%',
+            maxWidth: '150px',
+            textAlign: 'center'
           }}
         >
-          <MdHome size={20} /> Home
+          <MdHome size={20} style={{ marginRight: '5px' }} /> Home
         </div>
         <div
           style={{
             backgroundColor: '#FFA500',
             color: '#FFFFFF',
             padding: '10px',
-            borderRadius: '0.5rem',
+            borderRadius: '8px',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             border: 'none',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+            width: '100%',
+            maxWidth: '150px',
+            textAlign: 'center'
           }}
         >
-          <MdMessage size={20} /> Messages
+          <MdMessage size={20} style={{ marginRight: '5px' }} /> Messages
         </div>
       </div>
     </div>

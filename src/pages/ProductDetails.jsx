@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { produceData } from './ProduceData';
+import { produceData } from '../components/customers/ProduceData';
 
 const ProduceDetails = () => {
   const { produceName } = useParams();

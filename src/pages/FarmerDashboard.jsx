@@ -10,7 +10,7 @@ const FarmerDashboard = () => {
     <div style={dashboardContainerStyle}>
       <nav style={navStyle}>
         <ul style={navListStyle}>
-          <li><Link to="profile" style={navLinkStyle}>Profile</Link></li>
+          <li><Link to="profile" style={navLinkStyle}>Farmer profile</Link></li>
           <li><Link to="products" style={navLinkStyle}>Manage Products</Link></li>
           <li><Link to="inquiries" style={navLinkStyle}>Purchase Inquiries</Link></li>
           <li><Link to="orders" style={navLinkStyle}>Order Management</Link></li>

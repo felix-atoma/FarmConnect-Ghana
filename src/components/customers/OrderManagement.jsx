@@ -1,4 +1,4 @@
-// src/components/Customer/OrderManagement.jsx
+
 import React from 'react';
 
 const OrderManagement = ({ orders }) => {

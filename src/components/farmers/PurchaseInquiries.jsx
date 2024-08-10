@@ -1,12 +1,12 @@
-// src/components/PurchaseInquiries.jsx
+
 import React, { useState, useEffect } from 'react';
-import AuthService from '../../services/Auth' // Adjust path as necessary
+import AuthService from '../../services/Auth' 
 
 const PurchaseInquiries = () => {
   const [inquiries, setInquiries] = useState([]);
 
   useEffect(() => {
-    // Fetch inquiries data from API
+    
     const fetchInquiries = async () => {
       const data = await AuthService.getInquiries(); // Replace with actual API call
       setInquiries(data);

@@ -5,7 +5,7 @@ import { FaSave, FaTimes, FaEdit } from 'react-icons/fa';
 const CustomerProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    name: 'Jane Smith',
+    name: 'kelvin ali',
     location: 'Kumasi, Ghana',
     contact: '+233 987 654 321',
   });
@@ -86,7 +86,7 @@ const CustomerProfile = () => {
             <p><strong>Total:</strong> GHC 150</p>
             <p><strong>Status:</strong> Delivered</p>
           </div>
-          {/* Repeat for other orders */}
+          
         </div>
       </section>
 
@@ -97,7 +97,7 @@ const CustomerProfile = () => {
             <p><strong>Product:</strong> Fresh Avocados</p>
             <p><strong>Price:</strong> GHC 40</p>
           </div>
-          {/* Repeat for other wishlist items */}
+          
         </div>
       </section>
 
