@@ -61,7 +61,7 @@ const Register = () => {
       <div
         style={{
           flex: 1,
-          backgroundImage: 'url(src/assets/ladyImage.jpg)',
+          backgroundImage: 'url(src/assets/LadyImage2.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           borderRadius: '0.5rem',

@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MapContainer from '../components/common/MapContainer';
 import { FaSms, FaMapMarkerAlt } from 'react-icons/fa';
 import { MdSearch } from 'react-icons/md';
-import MessageHolder from './MessageHolder';
-
+import SDGsSection from './SDGSection';
+import HeroSection from './HeroSection';
 const Home = () => {
   const [showCard, setShowCard] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [message, setMessage] = useState({ name: '', email: '', message: '' });
   const navigate = useNavigate();
-
-  const locations = [
-    { lat: 5.6037, lng: -0.1870 },
-    { lat: 5.6038, lng: -0.1871 }
-  ];
-  const center = { lat: 5.6037, lng: -0.1870 };
 
   const agriculturalItems = [
     'Tomatoes', 'Potatoes', 'Onions', 'Cabbage', 'Carrots', 'Lettuce', 'Spinach', 'Beans', 
@@ -49,14 +41,6 @@ const Home = () => {
     navigate('/message-holder');
   };
 
-  const handleFarmerDashboardClick = () => {
-    navigate('/farmer-dashboard');
-  };
-
-  const handleCustomerDashboardClick = () => {
-    navigate('/customer-dashboard');
-  };
-
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -64,10 +48,6 @@ const Home = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     console.log('Search submitted:', searchQuery);
-  };
-
-  const handleGeolocationClick = () => {
-    navigate('/regions');
   };
 
   const handleSuggestionClick = (suggestion) => {
@@ -91,7 +71,7 @@ const Home = () => {
           padding: '20px'
         }}>
           <div 
-            onClick={handleGeolocationClick} 
+            onClick={() => navigate('/regions')} 
             style={{ 
               marginBottom: '10px', 
               cursor: 'pointer', 
@@ -180,65 +160,6 @@ const Home = () => {
         </div>
       </header>
 
-      <section style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <h2>Featured Products</h2>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
-          <div
-            style={{ 
-              width: '200px', 
-              backgroundColor: '#F5F5F5', 
-              padding: '10px', 
-              borderRadius: '8px',
-              transition: 'transform 0.3s ease, background-color 0.3s ease',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.backgroundColor = '#E0E0E0';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.backgroundColor = '#F5F5F5';
-            }}
-            onClick={() => navigate('/product/produce-1')} // Example click handler
-          >
-            <img src="https://via.placeholder.com/200" alt="Product 1" style={{ width: '100%', borderRadius: '8px' }} />
-            <h3>Product 1</h3>
-            <p>Description of Product 1.</p>
-          </div>
-
-          <div
-            style={{ 
-              width: '200px', 
-              backgroundColor: '#F5F5F5', 
-              padding: '10px', 
-              borderRadius: '8px',
-              transition: 'transform 0.3s ease, background-color 0.3s ease',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.backgroundColor = '#E0E0E0';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.backgroundColor = '#F5F5F5';
-            }}
-            onClick={() => navigate('/product/produce-2')} // Example click handler
-          >
-            <img src="https://via.placeholder.com/200" alt="Product 2" style={{ width: '100%', borderRadius: '8px' }} />
-            <h3>Product 2</h3>
-            <p>Description of Product 2.</p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <MapContainer locations={locations} center={center} />
-      </section>
-
-      {showCard && <MessageHolder />}
-      
       <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
         <button
           onClick={handleSmsClick}
@@ -259,6 +180,9 @@ const Home = () => {
           <FaSms size={24} />
         </button>
       </div>
+       <HeroSection/>
+      {/* SDGs Section */}
+      <SDGsSection />
     </div>
   );
 };
