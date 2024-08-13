@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
-    <div style={{ backgroundColor: '#f7f7f7', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ backgroundColor: '#71B34A', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       {/* Header */}
-      <header style={{ backgroundColor: '#2f855a', color: '#ffffff', padding: '16px', textAlign: 'center', width: '100%' }}>
+      <header style={{ backgroundColor: '#71B34A', color: '#ffffff', padding: '16px', textAlign: 'center', width: '100%' }}>
         <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>Welcome to FarmConnect Ghana</h1>
         <p style={{ fontSize: '1.125rem', marginTop: '8px' }}>Empowering Farmers, Connecting Markets, and Supporting Growth</p>
       </header>
@@ -20,7 +20,7 @@ const HeroSection = () => {
       <div style={{ textAlign: 'center', padding: '20px', width: '100%' }}>
         <Link to="/register">
           <button style={{
-            backgroundColor: '#38a169', // Green color
+            backgroundColor: '#F7931E', // Green color
             color: '#ffffff',
             padding: '12px 24px',
             borderRadius: '8px',

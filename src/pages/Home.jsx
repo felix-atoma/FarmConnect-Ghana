@@ -4,6 +4,7 @@ import { FaSms, FaMapMarkerAlt } from 'react-icons/fa';
 import { MdSearch } from 'react-icons/md';
 import SDGsSection from './SDGSection';
 import HeroSection from './HeroSection';
+import Testimonials from './Testimonials';
 const Home = () => {
   const [showCard, setShowCard] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -183,6 +184,7 @@ const Home = () => {
        <HeroSection/>
       {/* SDGs Section */}
       <SDGsSection />
+      <Testimonials/>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import womanImage from '../assets/woman.jpg';
 import northernImage from '../assets/Northern.webp';
 import manImage from '../assets/man.webp';
-import marketImage from '../assets/market.jpeg';
+import marketImage from '../assets/womanatfarm.jpg';
 
 const carouselItems = [
   {
@@ -31,7 +31,7 @@ const carouselItems = [
 
 const CarouselComponent = () => {
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
       <Carousel
         showThumbs={false}
         autoPlay
@@ -39,19 +39,32 @@ const CarouselComponent = () => {
         showArrows={true}
         showStatus={false}
         transitionTime={500}
-        className="w-full h-full"
+        style={{ width: '100%', height: '100%' }}
       >
         {carouselItems.map((item, index) => (
-          <div key={index} className="relative w-full h-full">
+          <div key={index} style={{ position: 'relative', width: '100%', height: '100%' }}>
             <img
               src={item.image}
               alt={item.title}
-              className="w-full h-full object-cover"
-              style={{ height: '100vh' }} // Ensure image takes full viewport height
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
-            <div className="absolute inset-0 flex flex-col justify-center items-center bg-gray-900 bg-opacity-50 text-white p-6 text-center">
-              <h2 className="text-4xl font-bold mb-4">{item.title}</h2>
-              <p className="text-lg">{item.description}</p>
+            <div style={{
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+              color: '#FFFFFF',
+              padding: '20px',
+              textAlign: 'center'
+            }}>
+              <h2 style={{ fontSize: '36px', fontWeight: 'bold', marginBottom: '20px' }}>{item.title}</h2>
+              <p style={{ fontSize: '18px' }}>{item.description}</p>
             </div>
           </div>
         ))}
