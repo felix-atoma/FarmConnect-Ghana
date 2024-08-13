@@ -1,43 +1,52 @@
-
 import React, { useState, useEffect } from 'react';
-import AuthService from '../../services/Auth' 
+import { fetchMessages, sendMessage } from '../../services/Auth'; // Adjust path as necessary
 
 const PurchaseInquiries = () => {
-  const [inquiries, setInquiries] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
 
   useEffect(() => {
-    
-    const fetchInquiries = async () => {
-      const data = await AuthService.getInquiries(); // Replace with actual API call
-      setInquiries(data);
+    // Fetch messages data from API
+    const fetchMessagesData = async () => {
+      try {
+        const response = await fetchMessages();
+        setMessages(response.data); // Adjust based on your response structure
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
     };
 
-    fetchInquiries();
+    fetchMessagesData();
   }, []);
 
-  const handleResponse = async (inquiryId, response) => {
-    await AuthService.respondToInquiry(inquiryId, response); // Replace with actual API call
-    const updatedInquiries = await AuthService.getInquiries(); // Refresh inquiries
-    setInquiries(updatedInquiries);
+  const handleSend = async () => {
+    try {
+      await sendMessage(newMessage);
+      setNewMessage('');
+      const updatedMessages = await fetchMessages(); // Refresh messages
+      setMessages(updatedMessages.data); // Adjust based on your response structure
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
 
   return (
     <div style={containerStyle}>
       <h1 style={headingStyle}>Purchase Inquiries</h1>
-      <ul style={inquiriesListStyle}>
-        {inquiries.map(inquiry => (
-          <li key={inquiry.id} style={inquiryItemStyle}>
-            <p><strong>Product:</strong> {inquiry.productName}</p>
-            <p><strong>Customer:</strong> {inquiry.customerName}</p>
-            <p><strong>Message:</strong> {inquiry.message}</p>
-            <textarea
-              placeholder="Your response..."
-              onBlur={(e) => handleResponse(inquiry.id, e.target.value)}
-              style={responseTextareaStyle}
-            />
-          </li>
+      <div style={messagesContainerStyle}>
+        {messages.map(message => (
+          <div key={message.id} style={messageItemStyle}>
+            <p><strong>{message.sender}:</strong> {message.text}</p>
+          </div>
         ))}
-      </ul>
+      </div>
+      <textarea
+        value={newMessage}
+        onChange={(e) => setNewMessage(e.target.value)}
+        placeholder="Type your message here..."
+        style={messageInputStyle}
+      />
+      <button onClick={handleSend} style={buttonStyle}>Send</button>
     </div>
   );
 };
@@ -45,8 +54,9 @@ const PurchaseInquiries = () => {
 // Inline CSS styles
 const containerStyle = { padding: '20px' };
 const headingStyle = { fontSize: '24px', marginBottom: '20px' };
-const inquiriesListStyle = { listStyleType: 'none', padding: '0' };
-const inquiryItemStyle = { padding: '10px', borderBottom: '1px solid #ddd' };
-const responseTextareaStyle = { width: '100%', padding: '10px', marginTop: '10px' };
+const messagesContainerStyle = { marginBottom: '20px' };
+const messageItemStyle = { padding: '10px', borderBottom: '1px solid #ddd' };
+const messageInputStyle = { width: '100%', padding: '10px' };
+const buttonStyle = { backgroundColor: '#71B34A', color: '#fff', padding: '10px', border: 'none', cursor: 'pointer' };
 
 export default PurchaseInquiries;

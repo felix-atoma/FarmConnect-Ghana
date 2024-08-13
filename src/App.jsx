@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/common/Navbar';
@@ -14,7 +14,7 @@ import FeedbackPage from './pages/FeedbackPage';
 import PrivateRoute from './components/common/PrivateRouter';
 import FarmerProfile from './components/farmers/FarmerProfile';
 import CustomerProfile from './components/customers/CustomerProfile';
-import CustomerCommunication from './components/farmers/CustomerCommumication';
+import CustomerCommunication from './components/farmers/CustomerCommumication'
 import PurchaseInquiries from './components/farmers/PurchaseInquiries';
 import ProductManagement from './components/farmers/ProductManagement';
 import CartPage from './pages/CartPage';
@@ -36,7 +36,7 @@ import Careers from './pages/Careers';
 import TermsAndConditions from './pages/TermsAndConditions';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import BillingPolicy from './pages/BillingPolicy';
-import CopyrightInfringementPolicy from './pages/CopyRightInfringment';
+import CopyrightInfringementPolicy from './pages/CopyRightInfringment'
 import SafetyTips from './pages/SafetyTips';
 import ContactUs from './pages/ContactUs';
 import FAQ from './pages/FAQ';
@@ -48,62 +48,75 @@ const rootStyle = {
   minHeight: '100vh',
 };
 
-const mainStyle = {
-  flex: 1,
-};
+const App = () => (
+  <AuthProvider>
+    <CartProvider>
+      <Router>
+        <div style={rootStyle}>
+          <Navbar />
+          <main style={{ flex: 1 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/order-confirmation" element={<OrderConfirmation />} />
+              <Route path="/feedback" element={<FeedbackPage />} />
+              <Route path="/support" element={<Support />} />
+              <Route path="/apps" element={<OurApps />} />
+              <Route path="/resources" element={<OurResources />} />
+              <Route path="/hot-links" element={<HotLinks />} />
+              <Route path="/about" element={<AboutFarmConnectGhana />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/terms" element={<TermsAndConditions />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/billing" element={<BillingPolicy />} />
+              <Route path="/copyright" element={<CopyrightInfringementPolicy />} />
+              <Route path="/safety" element={<SafetyTips />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/farmconnectghana" element={<FarmConnectGhana />} />
 
-const App = () => {
-  return (
-    <AuthProvider>
-      <CartProvider>
-        <Router>
-          <div style={rootStyle}>
-            <Navbar />
-            <main style={mainStyle}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/farmer-dashboard" element={<PrivateRoute><FarmerDashboard /></PrivateRoute>} />
-                <Route path="/customer-dashboard" element={<PrivateRoute><CustomerDashboard /></PrivateRoute>} />
-                <Route path="/products" element={<ProductList />} />
-                <Route path="/products/:produceName" element={<ProduceDetails />} />
-                <Route path="/orders/confirmation/:orderId" element={<OrderConfirmation />} />
-                <Route path="/feedback" element={<FeedbackPage />} />
-                <Route path="/farmer-profile" element={<FarmerProfile />} />
-                <Route path="/customer-profile" element={<CustomerProfile />} />
-                <Route path="/customer-communication" element={<CustomerCommunication />} />
-                <Route path="/product-management" element={<ProductManagement />} />
-                <Route path="/purchase-inquiries" element={<PurchaseInquiries />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/initial-screen" element={<InitialScreen />} />
-                <Route path="/message-holder" element={<MessageHolder />} />
-                <Route path="/regions" element={<Regions />} />
-                <Route path="/regions-page" element={<RegionsPage />} />
-                <Route path="/district" element={<DistrictDetail />} />
-                <Route path="/support" element={<Support />} />
-                <Route path="/our-apps" element={<OurApps />} />
-                <Route path="/our-resources" element={<OurResources />} />
-                <Route path="/hot-links" element={<HotLinks />} />
-                <Route path="/about-farm-connect-ghana" element={<AboutFarmConnectGhana />} />
-                <Route path="/we-are-hiring" element={<Careers />} />
-                <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="/billing-policy" element={<BillingPolicy />} />
-                <Route path="/copyright-infringement-policy" element={<CopyrightInfringementPolicy />} />
-                <Route path="/safety-tips" element={<SafetyTips />} />
-                <Route path="/contact-us" element={<ContactUs />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/farm-connect-ghana" element={<FarmConnectGhana />} />
-                <Route path="*" element={<div>404 Not Found</div>} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-        </Router>
-      </CartProvider>
-    </AuthProvider>
-  );
-};
+              <Route
+                path="/farmer-dashboard"
+                element={
+                  <PrivateRoute>
+                    <FarmerDashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/customer-dashboard"
+                element={
+                  <PrivateRoute>
+                    <CustomerDashboard />
+                  </PrivateRoute>
+                }
+              />
+
+              {/* Other routes */}
+              <Route path="/product-list" element={<ProductList />} />
+              <Route path="/produce-details" element={<ProduceDetails />} />
+              <Route path="/farmer-profile" element={<FarmerProfile />} />
+              <Route path="/customer-profile" element={<CustomerProfile />} />
+              <Route path="/customer-communication" element={<CustomerCommunication />} />
+              <Route path="/purchase-inquiries" element={<PurchaseInquiries />} />
+              <Route path="/product-management" element={<ProductManagement />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/initial-screen" element={<InitialScreen />} />
+              <Route path="/message-holder" element={<MessageHolder />} />
+              <Route path="/regions" element={<Regions />} />
+              <Route path="/regions-page" element={<RegionsPage />} />
+              <Route path="/district-detail" element={<DistrictDetail />} />
+              
+              {/* Redirect unknown paths to home */}
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </CartProvider>
+  </AuthProvider>
+);
 
 export default App;

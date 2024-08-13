@@ -1,6 +1,5 @@
-// src/components/CustomerCommunication.jsx
 import React, { useState, useEffect } from 'react';
-import AuthService from '../../services/Auth'; // Adjust path as necessary
+import { fetchMessages, sendMessage } from '../../services/Auth'; // Adjust path as necessary
 
 const CustomerCommunication = () => {
   const [messages, setMessages] = useState([]);
@@ -8,19 +7,27 @@ const CustomerCommunication = () => {
 
   useEffect(() => {
     // Fetch messages data from API
-    const fetchMessages = async () => {
-      const data = await AuthService.getMessages(); // Replace with actual API call
-      setMessages(data);
+    const getMessages = async () => {
+      try {
+        const response = await fetchMessages(); // Use the correct method
+        setMessages(response.data); // Adjust based on response structure
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
     };
 
-    fetchMessages();
+    getMessages();
   }, []);
 
   const handleSend = async () => {
-    await AuthService.sendMessage(newMessage); // Replace with actual API call
-    setNewMessage('');
-    const updatedMessages = await AuthService.getMessages(); // Refresh messages
-    setMessages(updatedMessages);
+    try {
+      await sendMessage(newMessage); // Use the correct method
+      setNewMessage('');
+      const updatedMessages = await fetchMessages(); // Refresh messages
+      setMessages(updatedMessages.data); // Adjust based on response structure
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
 
   return (

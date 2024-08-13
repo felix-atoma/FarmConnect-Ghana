@@ -1,22 +1,24 @@
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext'; // Adjust path if necessary
 
-function PrivateRoute({ element, ...rest }) {
+const PrivateRoute = ({ children }) => {
   const { isAuthenticated, userRole } = useContext(AuthContext);
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" />;
   }
 
-
-  if (userRole === 'farmer') {
-    return <Navigate to="/farmer-dashboard" replace />;
-  } else if (userRole === 'customer') {
-    return <Navigate to="/customer-dashboard" replace />;
+  if (isAuthenticated && userRole === 'farmer') {
+    return <Navigate to="/farmer-dashboard" />;
   }
 
-  return element;
-}
+  if (isAuthenticated && userRole === 'customer') {
+    return <Navigate to="/customer-dashboard" />;
+  }
+
+  // Fallback if role is not recognized
+  return <Navigate to="/" />;
+};
 
 export default PrivateRoute;

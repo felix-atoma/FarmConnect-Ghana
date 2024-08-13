@@ -1,42 +1,53 @@
-// src/components/OrderManagement.jsx
-import React, { useState, useEffect } from 'react';
-import AuthService from '../../services/Auth'// Adjust path as necessary
+import React, { useEffect, useState } from 'react';
+import { fetchOrders,updateOrder } from '../../services/Auth';
 
 const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch orders data from API
-    const fetchOrders = async () => {
-      const data = await AuthService.getOrders(); // Replace with actual API call
-      setOrders(data);
+    const getOrders = async () => {
+      try {
+        const response = await fetchOrders(); // Call the fetchOrders function
+        setOrders(response.data); // Adjust based on API response structure
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchOrders();
+    getOrders();
   }, []);
 
+  const handleUpdateOrder = async (orderId, updateData) => {
+    try {
+      await updateOrder(orderId, updateData); // Call the updateOrder function
+      // Optionally, refresh orders or handle success
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
-    <div style={containerStyle}>
-      <h1 style={headingStyle}>Order Management</h1>
-      <ul style={ordersListStyle}>
+    <div>
+      <h1>Order Management</h1>
+      <ul>
         {orders.map(order => (
-          <li key={order.id} style={orderItemStyle}>
-            <p><strong>Order ID:</strong> {order.id}</p>
-            <p><strong>Customer:</strong> {order.customerName}</p>
-            <p><strong>Product:</strong> {order.productName}</p>
-            <p><strong>Quantity:</strong> {order.quantity}</p>
-            <p><strong>Status:</strong> {order.status}</p>
+          <li key={order.id}>
+            {order.description}
+            <button onClick={() => handleUpdateOrder(order.id, { status: 'shipped' })}>
+              Mark as Shipped
+            </button>
           </li>
         ))}
       </ul>
     </div>
   );
 };
-
-// Inline CSS styles
-const containerStyle = { padding: '20px' };
-const headingStyle = { fontSize: '24px', marginBottom: '20px' };
-const ordersListStyle = { listStyleType: 'none', padding: '0' };
-const orderItemStyle = { padding: '10px', borderBottom: '1px solid #ddd' };
 
 export default OrderManagement;

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaUser, FaLock } from 'react-icons/fa'; 
-import fruitImage from '../assets/fruitImage.jpg'
-import { Link } from 'react-router-dom'; 
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { FaUser, FaLock } from 'react-icons/fa';
+import fruitImage from '../assets/fruitImage.jpg';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [role, setRole] = useState(searchParams.get('role') || '');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +20,10 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await fetch('http://farm-connect-api.onrender.com/users/login', {
+      const apiUrl = `${import.meta.env.VITE_BASE_URL}/users/login`;
+      console.log('API URL:', apiUrl);
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,15 +32,16 @@ const Login = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Login failed');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
       }
 
       const data = await response.json();
       console.log('Login Response:', data);
 
-      const userRole = data.role;
+      const userRole = data.user?.role; 
+      console.log('User Role:', userRole); 
 
-      
       if (userRole === 'farmer') {
         navigate('/farmer-dashboard');
       } else if (userRole === 'customer') {
@@ -45,7 +51,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error('Login error:', error);
-      setError('Login failed. Please check your email and password.');
+      setError(error.message || 'Login failed. Please check your email and password.');
     } finally {
       setLoading(false);
     }
@@ -53,7 +59,6 @@ const Login = () => {
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#F8FAFC' }}>
-      
       <div style={{ flex: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
         <div style={{
           maxWidth: '400px',

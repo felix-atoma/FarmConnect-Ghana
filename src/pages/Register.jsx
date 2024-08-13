@@ -26,9 +26,9 @@ const Register = () => {
           firstName,
           lastName,
           email,
-          password,
           phone,
-          role,
+          password,
+          role,  
         }),
       });
 
@@ -39,17 +39,16 @@ const Register = () => {
       const data = await response.json();
       console.log('Registration Response:', data);
 
-      const userRole = data.role;
+      
 
-      if (userRole === 'farmer') {
+      if (response.status === 201 && role === 'farmer') {
         navigate('/farmer-dashboard');
-      } else if (userRole === 'customer') {
+      } else if (response.status===201 && role === 'customer') {
         navigate('/customer-dashboard');
       } else {
         navigate('/');
       }
 
-      
       setIsSuccess(true);
       setTimeout(() => setIsSuccess(false), 3000); // Hide success message after 3 seconds
     } catch (error) {
@@ -280,6 +279,41 @@ const Register = () => {
                 onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
               />
             </div>
+            <div style={{ marginBottom: '1rem' }}>
+              <label
+                style={{
+                  display: 'block',
+                  color: '#4A4A4A',
+                  fontSize: '0.875rem',
+                  fontWeight: 'bold',
+                  marginBottom: '0.5rem',
+                }}
+                htmlFor="role"
+              >
+                Role
+              </label>
+              <select
+                id="role"
+                name="role"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '1px solid #D1D5DB',
+                  borderRadius: '0.375rem',
+                  backgroundColor: '#F9FAFB',
+                  boxSizing: 'border-box',
+                  transition: 'border-color 0.3s ease',
+                }}
+                required
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                onFocus={(e) => e.target.style.borderColor = '#71B34A'}
+                onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
+              >
+                <option value="farmer">Farmer</option>
+                <option value="customer">Customer</option>
+              </select>
+            </div>
             <button
               type="submit"
               style={{
@@ -289,19 +323,16 @@ const Register = () => {
                 color: '#FFFFFF',
                 border: 'none',
                 borderRadius: '0.375rem',
-                fontSize: '1rem',
                 cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: 'bold',
                 transition: 'background-color 0.3s ease',
               }}
             >
               Register
             </button>
+            {isSuccess && <p style={{ color: '#4CAF50', marginTop: '10px' }}>Registration successful!</p>}
           </form>
-          {isSuccess && (
-            <p style={{ color: '#4CAF50', textAlign: 'center', marginTop: '20px' }}>
-              Registration successful!
-            </p>
-          )}
         </div>
       </div>
     </div>
