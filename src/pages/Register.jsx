@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaSeedling, FaShoppingCart } from 'react-icons/fa';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { FaSeedling, FaShoppingCart } from 'react-icons/fa';
 
 const PasswordInput = ({ value, onChange }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +18,7 @@ const PasswordInput = ({ value, onChange }) => {
         placeholder="Password"
         style={{
           width: '100%',
-          padding: '0.75rem 2.5rem 0.75rem 0.75rem', // Extra padding on the right for the icon
+          padding: '0.75rem 2.5rem 0.75rem 0.75rem',
           border: '1px solid #D1D5DB',
           borderRadius: '0.375rem',
           boxSizing: 'border-box',
@@ -31,7 +30,7 @@ const PasswordInput = ({ value, onChange }) => {
         onClick={handleTogglePassword}
         style={{
           position: 'absolute',
-          right: '10px', // Adjust as needed
+          right: '10px',
           top: '50%',
           transform: 'translateY(-50%)',
           cursor: 'pointer',
@@ -90,7 +89,7 @@ const Register = () => {
       }
 
       setIsSuccess(true);
-      setTimeout(() => setIsSuccess(false), 3000); // Hide success message after 3 seconds
+      setTimeout(() => setIsSuccess(false), 3000);
     } catch (error) {
       console.error('Registration error:', error);
     }
@@ -158,6 +157,44 @@ const Register = () => {
                   fontWeight: 'bold',
                   marginBottom: '0.5rem',
                 }}
+                htmlFor="role"
+              >
+                Role
+              </label>
+              <select
+                id="role"
+                name="role"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '1px solid #D1D5DB',
+                  borderRadius: '0.375rem',
+                  boxSizing: 'border-box',
+                  backgroundColor: '#F9FAFB',
+                  transition: 'border-color 0.3s ease',
+                }}
+                required
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                onFocus={(e) => e.target.style.borderColor = '#71B34A'}
+                onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
+                onMouseOver={(e) => e.target.style.borderColor = '#F7931E'}
+                onMouseOut={(e) => e.target.style.borderColor = '#D1D5DB'}
+              >
+                <option value="">Select Role</option>
+                <option value="farmer">Farmer</option>
+                <option value="customer">Customer</option>
+              </select>
+            </div>
+            <div style={{ marginBottom: '1rem' }}>
+              <label
+                style={{
+                  display: 'block',
+                  color: '#4A4A4A',
+                  fontSize: '0.875rem',
+                  fontWeight: 'bold',
+                  marginBottom: '0.5rem',
+                }}
                 htmlFor="firstName"
               >
                 First Name
@@ -181,6 +218,8 @@ const Register = () => {
                 onChange={(e) => setFirstName(e.target.value)}
                 onFocus={(e) => e.target.style.borderColor = '#71B34A'}
                 onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
+                onMouseOver={(e) => e.target.style.borderColor = '#F7931E'}
+                onMouseOut={(e) => e.target.style.borderColor = '#D1D5DB'}
               />
             </div>
             <div style={{ marginBottom: '1rem' }}>
@@ -215,6 +254,8 @@ const Register = () => {
                 onChange={(e) => setLastName(e.target.value)}
                 onFocus={(e) => e.target.style.borderColor = '#71B34A'}
                 onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
+                onMouseOver={(e) => e.target.style.borderColor = '#F7931E'}
+                onMouseOut={(e) => e.target.style.borderColor = '#D1D5DB'}
               />
             </div>
             <div style={{ marginBottom: '1rem' }}>
@@ -249,26 +290,11 @@ const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 onFocus={(e) => e.target.style.borderColor = '#71B34A'}
                 onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
+                onMouseOver={(e) => e.target.style.borderColor = '#F7931E'}
+                onMouseOut={(e) => e.target.style.borderColor = '#D1D5DB'}
               />
             </div>
-            <div style={{ marginBottom: '1rem' }}>
-              <label
-                style={{
-                  display: 'block',
-                  color: '#4A4A4A',
-                  fontSize: '0.875rem',
-                  fontWeight: 'bold',
-                  marginBottom: '0.5rem',
-                }}
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <PasswordInput
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
             <div style={{ marginBottom: '1rem' }}>
               <label
                 style={{
@@ -280,13 +306,13 @@ const Register = () => {
                 }}
                 htmlFor="phone"
               >
-                Phone Number
+                Phone
               </label>
               <input
                 type="tel"
                 id="phone"
                 name="phone"
-                placeholder="Phone Number"
+                placeholder="Phone"
                 style={{
                   width: '100%',
                   padding: '0.75rem',
@@ -301,32 +327,32 @@ const Register = () => {
                 onChange={(e) => setPhone(e.target.value)}
                 onFocus={(e) => e.target.style.borderColor = '#71B34A'}
                 onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
+                onMouseOver={(e) => e.target.style.borderColor = '#F7931E'}
+                onMouseOut={(e) => e.target.style.borderColor = '#D1D5DB'}
               />
             </div>
             <button
-  type="submit"
-  style={{
-    width: '100%',
-    padding: '0.75rem',
-    backgroundColor: '#71B34A', // Default button color
-    color: '#FFFFFF',
-    border: 'none',
-    borderRadius: '0.375rem',
-    cursor: 'pointer',
-    fontSize: '1rem',
-    fontWeight: 'bold',
-    transition: 'background-color 0.3s ease',
-    position: 'relative',
-    zIndex: 1,
-  }}
-  onMouseEnter={(e) => e.target.style.backgroundColor = '#F7931E'} // Orange on hover
-  onMouseLeave={(e) => e.target.style.backgroundColor = '#71B34A'} // Revert to green
->
-  Register
-</button>
-
+              type="submit"
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                backgroundColor: '#71B34A',
+                color: '#FFFFFF',
+                border: 'none',
+                borderRadius: '0.375rem',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s ease',
+              }}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#F7931E'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#71B34A'}
+            >
+              Register
+            </button>
             {isSuccess && (
-              <p style={{ color: '#4A4A4A', marginTop: '10px' }}>Registration successful!</p>
+              <div style={{ color: '#4CAF50', marginTop: '10px', fontSize: '0.875rem' }}>
+                Registration successful! Redirecting...
+              </div>
             )}
           </form>
         </div>

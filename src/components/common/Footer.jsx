@@ -58,7 +58,7 @@ const Footer = () => {
       <div style={containerStyle}>
         <div style={sectionStyle}>
           <h4>About Us</h4>
-          <ul>
+          <ul style={{ padding: 0, listStyleType: 'none' }}>
             <li><Link to="/about-farm-connect-ghana" style={linkStyle}>About FarmConnect Ghana</Link></li>
             <li><Link to="/we-are-hiring" style={linkStyle}>We Are Hiring</Link></li>
             <li><Link to="/terms-and-conditions" style={linkStyle}>Terms and Conditions</Link></li>
@@ -69,7 +69,7 @@ const Footer = () => {
         </div>
         <div style={sectionStyle}>
           <h4>Support</h4>
-          <ul>
+          <ul style={{ padding: 0, listStyleType: 'none' }}>
             <li><a href="mailto:support@farmconnectghana.com" style={linkStyle}>Support Email</a></li>
             <li><Link to="/safety-tips" style={linkStyle}>Safety Tips</Link></li>
             <li><Link to="/contact-us" style={linkStyle}>Contact Us</Link></li>
@@ -91,7 +91,7 @@ const Footer = () => {
         </div>
         <div style={sectionStyle}>
           <h4>Our Resources</h4>
-          <ul>
+          <ul style={{ padding: 0, listStyleType: 'none' }}>
             <li><a href="https://facebook.com/farmconnectghana" target="_blank" rel="noopener noreferrer" style={linkStyle}>FarmConnect on Facebook</a></li>
             <li><a href="https://instagram.com/farmconnectghana" target="_blank" rel="noopener noreferrer" style={linkStyle}>Our Instagram</a></li>
             <li><a href="https://twitter.com/farmconnectghana" target="_blank" rel="noopener noreferrer" style={linkStyle}>Our Twitter</a></li>
@@ -100,7 +100,7 @@ const Footer = () => {
         </div>
         <div style={sectionStyle}>
           <h4>Hot Links</h4>
-          <ul>
+          <ul style={{ padding: 0, listStyleType: 'none' }}>
             <li><a href="https://www.farmconnectghana.com" target="_blank" rel="noopener noreferrer" style={linkStyle}>FarmConnect Ghana</a></li>
           </ul>
         </div>

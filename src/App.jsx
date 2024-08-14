@@ -11,7 +11,7 @@ import FarmerDashboard from './pages/FarmerDashboard';
 import CustomerDashboard from './pages/CustomerDashboard';
 import OrderConfirmation from './pages/OrderConfirmation';
 import FeedbackPage from './pages/FeedbackPage';
-import PrivateRoute from './components/common/PrivateRouter';
+import PrivateRoute from './components/common/PrivateRouter'
 import FarmerProfile from './components/farmers/FarmerProfile';
 import CustomerProfile from './components/customers/CustomerProfile';
 import CustomerCommunication from './components/farmers/CustomerCommumication'
@@ -29,7 +29,7 @@ import ProduceDetails from './pages/ProductDetails';
 // New pages
 import Support from './pages/Support';
 import OurApps from './pages/OurApps';
-import OurResources from './pages/Ressources';
+import OurResources from './pages/Ressources'
 import HotLinks from './pages/HotLinks';
 import AboutFarmConnectGhana from './pages/About';
 import Careers from './pages/Careers';
@@ -41,6 +41,7 @@ import SafetyTips from './pages/SafetyTips';
 import ContactUs from './pages/ContactUs';
 import FAQ from './pages/FAQ';
 import FarmConnectGhana from './pages/FarmConnectGhana';
+import SearchResults from './pages/Serach';
 
 const rootStyle = {
   display: 'flex',
@@ -107,6 +108,7 @@ const App = () => (
               <Route path="/regions" element={<Regions />} />
               <Route path="/regions-page" element={<RegionsPage />} />
               <Route path="/district-detail" element={<DistrictDetail />} />
+              <Route path="/search-results" element={<SearchResults />} />
               
               {/* Redirect unknown paths to home */}
               <Route path="*" element={<Navigate to="/" />} />

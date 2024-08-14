@@ -75,6 +75,7 @@ const Login = () => {
                 type="email"
                 id="email"
                 placeholder="Email"
+                aria-label="Email"
                 style={{ width: '100%', padding: '0.75rem', border: '1px solid #D1D5DB', borderRadius: '0.375rem' }}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -90,6 +91,7 @@ const Login = () => {
                 type="password"
                 id="password"
                 placeholder="Password"
+                aria-label="Password"
                 style={{ width: '100%', padding: '0.75rem', border: '1px solid #D1D5DB', borderRadius: '0.375rem' }}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -108,7 +110,7 @@ const Login = () => {
                 cursor: 'pointer',
                 transition: 'background-color 0.3s ease',
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#ED8936')}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#2F855A')}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#38A169')}
               disabled={loading}
             >
