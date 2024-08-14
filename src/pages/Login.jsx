@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
-import fruitImage from '../assets/fruitImage.jpg';
-import { Link } from 'react-router-dom';
+import fruitImage from '../assets/man.webp'; // Ensure this path is correct
 
 const Login = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [role, setRole] = useState(searchParams.get('role') || '');
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -20,10 +16,7 @@ const Login = () => {
     setError('');
 
     try {
-      const apiUrl = `${import.meta.env.VITE_BASE_URL}/users/login`;
-      console.log('API URL:', apiUrl);
-
-      const response = await fetch(apiUrl, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,11 +30,13 @@ const Login = () => {
       }
 
       const data = await response.json();
-      console.log('Login Response:', data);
+      console.log('Login successful:', data); // Log successful login data
+      const userRole = data.user.role;
 
-      const userRole = data.user?.role; 
-      console.log('User Role:', userRole); 
+      // Log the role and navigate accordingly
+      console.log(`User role: ${userRole}`);
 
+      // Redirect based on user role
       if (userRole === 'farmer') {
         navigate('/farmer-dashboard');
       } else if (userRole === 'customer') {
@@ -50,7 +45,6 @@ const Login = () => {
         navigate('/');
       }
     } catch (error) {
-      console.error('Login error:', error);
       setError(error.message || 'Login failed. Please check your email and password.');
     } finally {
       setLoading(false);
@@ -122,9 +116,9 @@ const Login = () => {
             </button>
             <p style={{ marginTop: '1rem', textAlign: 'center', color: '#4A4A4A' }}>
               Don't have an account?{' '}
-              <Link to="/register" style={{ color: '#38A169', fontWeight: 'bold', textDecoration: 'none' }}>
+              <a href="/register" style={{ color: '#38A169', fontWeight: 'bold', textDecoration: 'none' }}>
                 Register
-              </Link>.
+              </a>.
             </p>
           </form>
         </div>

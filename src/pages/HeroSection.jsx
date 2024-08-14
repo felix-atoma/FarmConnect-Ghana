@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
-    <div style={{ backgroundColor: '#71B34A', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '' }}>
       {/* Header */}
-      <header style={{ backgroundColor: '#71B34A', color: '#ffffff', padding: '16px', textAlign: 'center', width: '100%' }}>
+      <header style={{ color: '#333333', padding: '16px', textAlign: 'center', width: '100%', backgroundColor: '#F4F4F4' }}>
         <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>Welcome to FarmConnect Ghana</h1>
         <p style={{ fontSize: '1.125rem', marginTop: '8px' }}>Empowering Farmers, Connecting Markets, and Supporting Growth</p>
       </header>
@@ -17,10 +17,10 @@ const HeroSection = () => {
       </section>
 
       {/* Get Started Button */}
-      <div style={{ textAlign: 'center', padding: '20px', width: '100%' }}>
+      <div style={{ textAlign: 'center', padding: '20px', width: '100%', marginTop: '20px' }}>
         <Link to="/register">
           <button style={{
-            backgroundColor: '#F7931E', // Green color
+            backgroundColor: '#F7931E', // Orange color
             color: '#ffffff',
             padding: '12px 24px',
             borderRadius: '8px',
@@ -29,10 +29,9 @@ const HeroSection = () => {
             fontSize: '1rem',
             cursor: 'pointer',
             transition: 'background-color 0.3s',
-            marginTop: '20px', // Added margin to ensure spacing from carousel
           }} 
-          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#ed8936'} // Orange color on hover
-          onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#38a169'} // Back to green color
+          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#ed8936'} // Darker orange color on hover
+          onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#F7931E'} // Back to original orange color
           >
             Get Started
           </button>

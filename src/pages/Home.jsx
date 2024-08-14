@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSms, FaMapMarkerAlt } from 'react-icons/fa';
-import { MdSearch } from 'react-icons/md';
-import SDGsSection from './SDGSection';
 import HeroSection from './HeroSection';
-import Testimonials from './Testimonials';
+import SDGsSection from './SDGSection';
+import ProductList from '../components/farmers/ProductList';
+
 const Home = () => {
-  const [showCard, setShowCard] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [category, setCategory] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [sortOrder, setSortOrder] = useState('asc');
   const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate();
 
@@ -32,23 +35,14 @@ const Home = () => {
     }
   }, [searchQuery]);
 
-  const handleSmsClick = () => {
-    console.log('SMS button clicked');
-    setShowCard(!showCard);
-    console.log('Show card state:', !showCard);
-  };
-
-  const handleContactSupportClick = () => {
-    navigate('/message-holder');
-  };
-
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    console.log('Search submitted:', searchQuery);
+    console.log('Search submitted:', { searchQuery, category, minPrice, maxPrice, sortOrder });
+    // Implement search logic
   };
 
   const handleSuggestionClick = (suggestion) => {
@@ -57,27 +51,43 @@ const Home = () => {
     setSuggestions([]);
   };
 
+  const handleSmsClick = () => {
+    console.log('SMS button clicked');
+    // Implement SMS logic
+  };
+
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', padding: '20px' }}>
-      <header style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <div style={{ 
-          backgroundColor: '#71B34A', 
-          height: '33vh', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          borderRadius: '8px',
-          marginBottom: '20px',
-          padding: '20px'
-        }}>
+    <div style={{ 
+      backgroundColor: '#FFFFFF', // White background for the entire page
+      minHeight: '100vh',
+      padding: '20px'
+    }}>
+      <header style={{ 
+        backgroundColor: '#FFFFFF', // White background for header
+        padding: '20px', 
+        borderRadius: '8px', 
+        marginBottom: '40px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}>
+        <div 
+          style={{ 
+            color: '#71B34A', 
+            textAlign: 'center',
+            marginBottom: '20px',
+            width: '100%',
+            maxWidth: '800px'
+          }}
+        >
           <div 
             onClick={() => navigate('/regions')} 
             style={{ 
               marginBottom: '10px', 
               cursor: 'pointer', 
-              color: '#FFFFFF', 
               display: 'flex', 
+              justifyContent: 'center', 
               alignItems: 'center',
               gap: '5px',
               fontSize: '1.2rem'
@@ -87,70 +97,101 @@ const Home = () => {
             Find Regions
           </div>
 
-          <h2 style={{ color: '#FFFFFF', marginBottom: '10px' }}>Search for every farming produce in Ghana</h2>
+          <h2 style={{ marginBottom: '20px' }}>Search for every farming produce in Ghana</h2>
           <form onSubmit={handleSearchSubmit} style={{ 
             display: 'flex', 
+            flexDirection: 'column',
             alignItems: 'center',
             backgroundColor: '#FFFFFF',
-            padding: '10px',
+            padding: '20px',
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-            position: 'relative'
+            position: 'relative',
+            width: '100%',
+            maxWidth: '600px'
           }}>
             <input
               type="text"
               value={searchQuery}
               onChange={handleSearchChange}
-              placeholder="I am looking for..."
+              placeholder="Search by name..."
               style={{ 
                 padding: '10px', 
                 borderRadius: '4px', 
                 border: '1px solid #ddd', 
-                flex: '1' 
+                width: '100%',
+                marginBottom: '10px'
               }}
             />
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ddd', marginBottom: '10px', width: '100%' }}
+            >
+              <option value="">Select Category</option>
+              <option value="vegetables">Vegetables</option>
+              <option value="fruits">Fruits</option>
+              <option value="meat">Meat</option>
+              {/* Add more categories as needed */}
+            </select>
+            <input
+              type="number"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+              placeholder="Min Price"
+              style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ddd', marginBottom: '10px', width: '100%' }}
+            />
+            <input
+              type="number"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+              placeholder="Max Price"
+              style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ddd', marginBottom: '10px', width: '100%' }}
+            />
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+              style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ddd', marginBottom: '10px', width: '100%' }}
+            >
+              <option value="asc">Sort Ascending</option>
+              <option value="desc">Sort Descending</option>
+            </select>
             <button
               type="submit"
-              style={{
-                padding: '10px',
-                backgroundColor: '#71B34A',
-                color: '#FFFFFF',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
+              style={{ 
+                backgroundColor: '#F7931E', 
+                color: '#FFFFFF', 
+                border: 'none', 
+                borderRadius: '4px', 
+                padding: '10px 20px', 
+                cursor: 'pointer'
               }}
             >
-              <MdSearch size={20} style={{ marginRight: '5px' }} />
               Search
             </button>
             {suggestions.length > 0 && (
-              <ul style={{
-                listStyle: 'none',
-                padding: 0,
-                margin: '10px 0 0',
-                width: '100%',
-                backgroundColor: '#FFFFFF',
-                borderRadius: '4px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                position: 'absolute',
-                top: '100%',
-                left: 0,
-                zIndex: 1
+              <ul style={{ 
+                position: 'absolute', 
+                top: '100%', 
+                left: '0', 
+                width: '100%', 
+                backgroundColor: '#FFFFFF', 
+                border: '1px solid #ddd', 
+                borderRadius: '4px', 
+                marginTop: '10px', 
+                padding: '0', 
+                listStyle: 'none', 
+                zIndex: '10'
               }}>
                 {suggestions.map((suggestion, index) => (
                   <li 
                     key={index} 
-                    style={{
-                      padding: '10px',
-                      borderBottom: '1px solid #ddd',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.3s ease',
-                    }}
                     onClick={() => handleSuggestionClick(suggestion)}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F7931E'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
+                    style={{ 
+                      padding: '10px', 
+                      cursor: 'pointer', 
+                      borderBottom: '1px solid #ddd'
+                    }}
                   >
                     {suggestion}
                   </li>
@@ -160,8 +201,10 @@ const Home = () => {
           </form>
         </div>
       </header>
-
-      <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
+      <HeroSection style={{ marginBottom: '20px' }} />
+      <SDGsSection style={{ marginBottom: '20px' }} />
+      <ProductList style={{ marginBottom: '20px' }} />
+      <div className="fixed-button">
         <button
           onClick={handleSmsClick}
           style={{
@@ -181,10 +224,6 @@ const Home = () => {
           <FaSms size={24} />
         </button>
       </div>
-       <HeroSection/>
-      {/* SDGs Section */}
-      <SDGsSection />
-      <Testimonials/>
     </div>
   );
 };

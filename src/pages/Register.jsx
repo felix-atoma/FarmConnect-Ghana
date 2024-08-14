@@ -1,11 +1,53 @@
 import React, { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FaSeedling, FaShoppingCart } from 'react-icons/fa';
+
+const PasswordInput = ({ value, onChange }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <input
+        type={showPassword ? 'text' : 'password'}
+        value={value}
+        onChange={onChange}
+        placeholder="Password"
+        style={{
+          width: '100%',
+          padding: '0.75rem 2.5rem 0.75rem 0.75rem', // Extra padding on the right for the icon
+          border: '1px solid #D1D5DB',
+          borderRadius: '0.375rem',
+          boxSizing: 'border-box',
+          backgroundColor: '#F9FAFB',
+          transition: 'border-color 0.3s ease',
+        }}
+      />
+      <div
+        onClick={handleTogglePassword}
+        style={{
+          position: 'absolute',
+          right: '10px', // Adjust as needed
+          top: '50%',
+          transform: 'translateY(-50%)',
+          cursor: 'pointer',
+          color: '#4A4A4A',
+        }}
+      >
+        {showPassword ? <FaEye size={20} /> : <FaEyeSlash size={20} />}
+      </div>
+    </div>
+  );
+};
 
 const Register = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [role, setRole] = useState(searchParams.get('role') || ''); 
+  const [role, setRole] = useState(searchParams.get('role') || '');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -28,7 +70,7 @@ const Register = () => {
           email,
           phone,
           password,
-          role,  
+          role,
         }),
       });
 
@@ -39,11 +81,9 @@ const Register = () => {
       const data = await response.json();
       console.log('Registration Response:', data);
 
-      
-
       if (response.status === 201 && role === 'farmer') {
         navigate('/farmer-dashboard');
-      } else if (response.status===201 && role === 'customer') {
+      } else if (response.status === 201 && role === 'customer') {
         navigate('/customer-dashboard');
       } else {
         navigate('/');
@@ -220,15 +260,33 @@ const Register = () => {
                   fontWeight: 'bold',
                   marginBottom: '0.5rem',
                 }}
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <PasswordInput
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div style={{ marginBottom: '1rem' }}>
+              <label
+                style={{
+                  display: 'block',
+                  color: '#4A4A4A',
+                  fontSize: '0.875rem',
+                  fontWeight: 'bold',
+                  marginBottom: '0.5rem',
+                }}
                 htmlFor="phone"
               >
-                Phone
+                Phone Number
               </label>
               <input
                 type="tel"
                 id="phone"
                 name="phone"
-                placeholder="Phone"
+                placeholder="Phone Number"
                 style={{
                   width: '100%',
                   padding: '0.75rem',
@@ -245,93 +303,31 @@ const Register = () => {
                 onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
               />
             </div>
-            <div style={{ marginBottom: '1rem' }}>
-              <label
-                style={{
-                  display: 'block',
-                  color: '#4A4A4A',
-                  fontSize: '0.875rem',
-                  fontWeight: 'bold',
-                  marginBottom: '0.5rem',
-                }}
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #D1D5DB',
-                  borderRadius: '0.375rem',
-                  boxSizing: 'border-box',
-                  backgroundColor: '#F9FAFB',
-                  transition: 'border-color 0.3s ease',
-                }}
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={(e) => e.target.style.borderColor = '#71B34A'}
-                onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
-              />
-            </div>
-            <div style={{ marginBottom: '1rem' }}>
-              <label
-                style={{
-                  display: 'block',
-                  color: '#4A4A4A',
-                  fontSize: '0.875rem',
-                  fontWeight: 'bold',
-                  marginBottom: '0.5rem',
-                }}
-                htmlFor="role"
-              >
-                Role
-              </label>
-              <select
-                id="role"
-                name="role"
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #D1D5DB',
-                  borderRadius: '0.375rem',
-                  backgroundColor: '#F9FAFB',
-                  boxSizing: 'border-box',
-                  transition: 'border-color 0.3s ease',
-                }}
-                required
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                onFocus={(e) => e.target.style.borderColor = '#71B34A'}
-                onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
-              >
-                <option value="farmer">Farmer</option>
-                <option value="customer">Customer</option>
-              </select>
-            </div>
             <button
-              type="submit"
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                backgroundColor: '#71B34A',
-                color: '#FFFFFF',
-                border: 'none',
-                borderRadius: '0.375rem',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                fontWeight: 'bold',
-                transition: 'background-color 0.3s ease',
-              }}
-            >
-              Register
-            </button>
-            {isSuccess && <p style={{ color: '#4CAF50', marginTop: '10px' }}>Registration successful!</p>}
+  type="submit"
+  style={{
+    width: '100%',
+    padding: '0.75rem',
+    backgroundColor: '#71B34A', // Default button color
+    color: '#FFFFFF',
+    border: 'none',
+    borderRadius: '0.375rem',
+    cursor: 'pointer',
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    transition: 'background-color 0.3s ease',
+    position: 'relative',
+    zIndex: 1,
+  }}
+  onMouseEnter={(e) => e.target.style.backgroundColor = '#F7931E'} // Orange on hover
+  onMouseLeave={(e) => e.target.style.backgroundColor = '#71B34A'} // Revert to green
+>
+  Register
+</button>
+
+            {isSuccess && (
+              <p style={{ color: '#4A4A4A', marginTop: '10px' }}>Registration successful!</p>
+            )}
           </form>
         </div>
       </div>

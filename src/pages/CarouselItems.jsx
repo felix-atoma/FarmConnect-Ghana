@@ -31,7 +31,12 @@ const carouselItems = [
 
 const CarouselComponent = () => {
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
+    <div style={{ 
+      position: 'relative', 
+      width: '100%', 
+      height: '100vh', // Full viewport height
+      overflow: 'hidden' 
+    }}>
       <Carousel
         showThumbs={false}
         autoPlay
@@ -42,29 +47,42 @@ const CarouselComponent = () => {
         style={{ width: '100%', height: '100%' }}
       >
         {carouselItems.map((item, index) => (
-          <div key={index} style={{ position: 'relative', width: '100%', height: '100%' }}>
+          <div 
+            key={index} 
+            style={{ 
+              position: 'relative', 
+              width: '100%', 
+              height: '100vh' // Full viewport height
+            }}
+          >
             <img
               src={item.image}
               alt={item.title}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover' // Cover the container
+              }}
             />
-            <div style={{
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-              color: '#FFFFFF',
-              padding: '20px',
-              textAlign: 'center'
-            }}>
+            <div 
+              style={{
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                color: 'white',
+                padding: '20px',
+                textAlign: 'center'
+              }}
+            >
               <h2 style={{ fontSize: '36px', fontWeight: 'bold', marginBottom: '20px' }}>{item.title}</h2>
-              <p style={{ fontSize: '18px' }}>{item.description}</p>
+              <p style={{ fontSize: '18px', margin: '0' }}>{item.description}</p>
             </div>
           </div>
         ))}
