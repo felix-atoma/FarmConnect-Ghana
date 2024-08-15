@@ -1,124 +1,174 @@
 import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
 
 const UnifiedSearchComponent = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [category, setCategory] = useState('');
-  const [description, setDescription] = useState('');
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
-  const [sortOrder, setSortOrder] = useState('asc');
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [filters, setFilters] = useState({
+    searchQuery: '',
+    category: '',
+    description: '',
+    minPrice: '',
+    maxPrice: '',
+    sortOrder: 'asc'
+  });
 
-  const handleSearch = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFilters({
+      ...filters,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch({ searchQuery, category, description, minPrice, maxPrice, sortOrder });
+    onSearch(filters);
   };
 
   return (
-    <div style={{ 
-      backgroundColor: '#FFFFFF', 
-      padding: '20px',
-      borderRadius: '8px',
+    <form onSubmit={handleSubmit} style={{
+      backgroundColor: '#FFFFFF',
+      padding: '60px', // Ensure padding fits items well
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      border: '1px solid #ddd',
+      display: 'flex',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      gap: '4px', // Small gap between items
+      justifyContent: 'center', // Center items horizontally
       width: '100%',
-      maxWidth: '600px',
-      margin: '0 auto'
+      maxWidth: '100%',
+      margin: '0 auto',
+      boxSizing: 'border-box'
     }}>
-      <button 
-        onClick={() => setIsExpanded(!isExpanded)}
+      <select 
+        id="category" 
+        name="category" 
+        value={filters.category} 
+        onChange={handleChange} 
         style={{
-          backgroundColor: '#F7931E',
-          color: '#FFFFFF',
-          border: 'none',
-          borderRadius: '4px',
-          padding: '10px 20px',
-          cursor: 'pointer',
-          width: '100%',
-          textAlign: 'left'
+          padding: '4px',
+          border: '1px solid #ddd',
+          backgroundColor: '#F9F9F9',
+          fontSize: '12px',
+          boxSizing: 'border-box',
+          width: '80px',
+          marginRight: '4px',
         }}
       >
-        Search <FaSearch />
-      </button>
+        <option value="">Cat</option>
+        <option value="fruits">Fruits</option>
+        <option value="vegetables">Vegetables</option>
+        {/* Add more categories as needed */}
+      </select>
 
-      {isExpanded && (
-        <form onSubmit={handleSearch} style={{ marginTop: '20px' }}>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by name..."
-            style={{ 
-              padding: '10px', 
-              borderRadius: '4px', 
-              border: '1px solid #ddd', 
-              width: '100%',
-              marginBottom: '10px'
-            }}
-          />
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Search by description..."
-            style={{ 
-              padding: '10px', 
-              borderRadius: '4px', 
-              border: '1px solid #ddd', 
-              width: '100%',
-              marginBottom: '10px'
-            }}
-          />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ddd', marginBottom: '10px', width: '100%' }}
-          >
-            <option value="">Select Category</option>
-            <option value="vegetables">Vegetables</option>
-            <option value="fruits">Fruits</option>
-            <option value="meat">Meat</option>
-            {/* Add more categories as needed */}
-          </select>
-          <input
-            type="number"
-            value={minPrice}
-            onChange={(e) => setMinPrice(e.target.value)}
-            placeholder="Min Price"
-            style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ddd', marginBottom: '10px', width: '100%' }}
-          />
-          <input
-            type="number"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
-            placeholder="Max Price"
-            style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ddd', marginBottom: '10px', width: '100%' }}
-          />
-          <select
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
-            style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ddd', marginBottom: '10px', width: '100%' }}
-          >
-            <option value="asc">Sort Ascending</option>
-            <option value="desc">Sort Descending</option>
-          </select>
-          <button
-            type="submit"
-            style={{ 
-              backgroundColor: '#F7931E', 
-              color: '#FFFFFF', 
-              border: 'none', 
-              borderRadius: '4px', 
-              padding: '10px 20px', 
-              cursor: 'pointer',
-              width: '100%'
-            }}
-          >
-            Search
-          </button>
-        </form>
-      )}
-    </div>
+      <input 
+        type="text" 
+        id="searchQuery" 
+        name="searchQuery" 
+        value={filters.searchQuery} 
+        onChange={handleChange} 
+        placeholder="Name"
+        style={{
+          padding: '4px',
+          border: '1px solid #ddd',
+          backgroundColor: '#F9F9F9',
+          fontSize: '12px',
+          boxSizing: 'border-box',
+          width: '80px',
+          marginRight: '4px',
+        }}
+      />
+
+      <input 
+        type="text" 
+        id="description" 
+        name="description" 
+        value={filters.description} 
+        onChange={handleChange} 
+        placeholder="Desc"
+        style={{
+          padding: '4px',
+          border: '1px solid #ddd',
+          backgroundColor: '#F9F9F9',
+          fontSize: '12px',
+          boxSizing: 'border-box',
+          width: '80px',
+          marginRight: '4px',
+        }}
+      />
+
+      <input 
+        type="number" 
+        id="minPrice" 
+        name="minPrice" 
+        value={filters.minPrice} 
+        onChange={handleChange} 
+        placeholder="Min GHS"
+        style={{
+          padding: '4px',
+          border: '1px solid #ddd',
+          backgroundColor: '#F9F9F9',
+          fontSize: '12px',
+          boxSizing: 'border-box',
+          width: '80px',
+          marginRight: '4px',
+        }}
+      />
+
+      <input 
+        type="number" 
+        id="maxPrice" 
+        name="maxPrice" 
+        value={filters.maxPrice} 
+        onChange={handleChange} 
+        placeholder="Max GHS"
+        style={{
+          padding: '4px',
+          border: '1px solid #ddd',
+          backgroundColor: '#F9F9F9',
+          fontSize: '12px',
+          boxSizing: 'border-box',
+          width: '80px',
+          marginRight: '4px',
+        }}
+      />
+
+      <select 
+        id="sortOrder" 
+        name="sortOrder" 
+        value={filters.sortOrder} 
+        onChange={handleChange} 
+        style={{
+          padding: '4px',
+          border: '1px solid #ddd',
+          backgroundColor: '#F9F9F9',
+          fontSize: '12px',
+          boxSizing: 'border-box',
+          width: '80px',
+          marginRight: '4px',
+        }}
+      >
+        <option value="asc">Asc</option>
+        <option value="desc">Desc</option>
+      </select>
+
+      <button 
+        type="submit" 
+        style={{
+          backgroundColor: '#71B34A',
+          color: '#FFFFFF',
+          padding: '4px',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: '12px',
+          fontWeight: 'bold',
+          transition: 'background-color 0.3s ease',
+          width: '80px',
+          whiteSpace: 'nowrap'
+        }}
+      >
+        Search
+      </button>
+    </form>
   );
 };
 

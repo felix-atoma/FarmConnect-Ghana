@@ -38,10 +38,13 @@ const Login = () => {
 
       // Redirect based on user role
       if (userRole === 'farmer') {
+        console.log ('go to farmer-dashboard')
         navigate('/farmer-dashboard');
       } else if (userRole === 'customer') {
+        console.log('go to customer-dashboard')
         navigate('/customer-dashboard');
       } else {
+        console.log('go home')
         navigate('/');
       }
     } catch (error) {
@@ -155,7 +158,7 @@ const Login = () => {
         backgroundImage: `url(${fruitImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        borderRadius: '0.5rem',
+        borderRadius: 'none',
         position: 'relative',
         minHeight: '100vh',
       }}>
