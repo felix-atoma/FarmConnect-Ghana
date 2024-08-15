@@ -1,11 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import UnifiedSearchComponent from './UnfiedSearchComponent';
-import HeroSection from './HeroSection';
-import SDGsSection from './SDGSection';
 import ProductList from '../components/farmers/ProductList';
 import { FaMapMarkerAlt } from 'react-icons/fa'; // Import icon if it's not already imported
-
+import DatabaseImagesSection from '../components/farmers/DataBaseImageSection';
 const Home = () => {
   const navigate = useNavigate();
 
@@ -73,8 +71,13 @@ const Home = () => {
           <UnifiedSearchComponent onSearch={handleSearch} />
         </div>
       </header>
-      <HeroSection style={{ marginBottom: '20px' }} />
-      <SDGsSection style={{ marginBottom: '20px' }} />
+
+      {/* New Component for Database Images */}
+      <div style={{ marginBottom: '20px' }}>
+        {/* Assuming you have a component to display images from the database */}
+        <DatabaseImagesSection />
+      </div>
+
       <ProductList style={{ marginBottom: '20px' }} />
     </div>
   );

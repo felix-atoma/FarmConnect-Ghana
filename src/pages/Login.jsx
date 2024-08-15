@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
-import fruitImage from '../assets/man.webp'; // Ensure this path is correct
+import fruitImage from '../assets/man.webp'; 
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const Login = () => {
       }
 
       const data = await response.json();
-      console.log('Login successful:', data); // Log successful login data
+      console.log('Login successful:', data); 
       const userRole = data.user.role;
 
       // Log the role and navigate accordingly
@@ -103,18 +103,42 @@ const Login = () => {
               style={{
                 width: '100%',
                 padding: '0.75rem',
-                backgroundColor: '#38A169',
+                backgroundColor: '#71B34A',
                 color: '#FFFFFF',
-                borderRadius: '0.375rem',
                 border: 'none',
+                borderRadius: '0.375rem',
                 cursor: 'pointer',
                 transition: 'background-color 0.3s ease',
+                position: 'relative',
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#2F855A')}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#38A169')}
               disabled={loading}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#F7931E'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#71B34A'}
             >
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? (
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg
+                    aria-hidden="true"
+                    role="status"
+                    className="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600"
+                    viewBox="0 0 100 101"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M100 50.5c0-27.55-22.45-50-50-50S0 22.95 0 50.5 22.45 100 50 100s50-22.45 50-50z"
+                      fill="#E5E5E5"
+                    />
+                    <path
+                      d="M93.97 50.5c0-24.8-20.24-45.03-45.03-45.03S3.91 25.7 3.91 50.5 24.15 95.53 49.95 95.53 93.97 75.3 93.97 50.5z"
+                      fill="#00BFFF"
+                    />
+                  </svg>
+                  Processing...
+                </span>
+              ) : (
+                'Login'
+              )}
             </button>
             <p style={{ marginTop: '1rem', textAlign: 'center', color: '#4A4A4A' }}>
               Don't have an account?{' '}

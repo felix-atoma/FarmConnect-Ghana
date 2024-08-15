@@ -1,41 +1,63 @@
 // src/pages/CustomerDashboard.jsx
 import React from 'react';
-import ProductSearch from '../components/customers/ProductSearch';
-import FarmerProfile from '../components/farmers/FarmerProfile';
-import OrderManagement from '../components/farmers/OrderManagement';
-import InquiryForm from '../components/customers/InquiryForm';
-import DirectMessage from '../components/customers/DirectMessage';
-import MapComponent from '../components/farmers/MapComponent';
+import { Outlet, Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const CustomerDashboard = () => {
-  // Example data
-  const exampleFarmer = {
-    id: '1',
-    name: 'John Doe',
-    description: 'Experienced farmer with organic produce.',
-    products: [{ id: '101', name: 'Tomatoes', price: 2.5 }]
-  };
-  const exampleOrders = [{ id: '5001', status: 'Shipped', total: 25.0 }];
-  const farmerLocations = [
-    { id: '1', lat: 7.1, lng: -0.2, name: 'John Doe', description: 'Tomatoes and more' }
-    // Add more farmer locations as needed
-  ];
-
-  const handleSearch = (params) => {
-    // Handle product search
-    console.log('Search params:', params);
-  };
-
   return (
-    <div style={{ padding: '20px' }}>
-      <ProductSearch onSearch={handleSearch} />
-      <FarmerProfile farmer={exampleFarmer} />
-      <OrderManagement orders={exampleOrders} />
-      <InquiryForm farmerId={exampleFarmer.id} />
-      <DirectMessage farmerId={exampleFarmer.id} />
-      <MapComponent locations={farmerLocations} />
-    </div>
+    <DashboardContainer>
+      <Sidebar>
+        <NavList>
+          <NavItem><StyledLink to="search">Product Search</StyledLink></NavItem>
+          <NavItem><StyledLink to="profile">Farmer Profile</StyledLink></NavItem>
+          <NavItem><StyledLink to="orders">Order Management</StyledLink></NavItem>
+          <NavItem><StyledLink to="inquiries">Inquiry Form</StyledLink></NavItem>
+          <NavItem><StyledLink to="messages">Direct Messages</StyledLink></NavItem>
+          <NavItem><StyledLink to="map">Map</StyledLink></NavItem>
+          <NavItem><StyledLink to="feedback">Feedback</StyledLink></NavItem>
+        </NavList>
+      </Sidebar>
+      <Main>
+        <Outlet /> {/* This is where the nested routes will be rendered */}
+      </Main>
+    </DashboardContainer>
   );
 };
+
+// Styled components
+const DashboardContainer = styled.div`
+  display: flex;
+`;
+
+const Sidebar = styled.nav`
+  width: 200px;
+  background-color: #f4f4f4;
+  padding: 20px;
+`;
+
+const NavList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+const NavItem = styled.li`
+  margin-bottom: 10px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 10px 0;
+
+  &:hover {
+    color: #007bff; /* Change color on hover */
+  }
+`;
+
+const Main = styled.main`
+  flex: 1;
+  padding: 20px;
+`;
 
 export default CustomerDashboard;

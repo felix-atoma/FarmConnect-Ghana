@@ -53,9 +53,11 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await fetch('https://farm-connect-api.onrender.com/users/register', {
@@ -92,6 +94,8 @@ const Register = () => {
       setTimeout(() => setIsSuccess(false), 3000);
     } catch (error) {
       console.error('Registration error:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -294,7 +298,6 @@ const Register = () => {
                 onMouseOut={(e) => e.target.style.borderColor = '#D1D5DB'}
               />
             </div>
-            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
             <div style={{ marginBottom: '1rem' }}>
               <label
                 style={{
@@ -309,7 +312,7 @@ const Register = () => {
                 Phone
               </label>
               <input
-                type="tel"
+                type="text"
                 id="phone"
                 name="phone"
                 placeholder="Phone"
@@ -331,28 +334,56 @@ const Register = () => {
                 onMouseOut={(e) => e.target.style.borderColor = '#D1D5DB'}
               />
             </div>
+            <div style={{ marginBottom: '1rem' }}>
+              <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
             <button
-              type="submit"
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                backgroundColor: '#71B34A',
-                color: '#FFFFFF',
-                border: 'none',
-                borderRadius: '0.375rem',
-                fontSize: '1rem',
-                cursor: 'pointer',
-                transition: 'background-color 0.3s ease',
-              }}
-              onMouseOver={(e) => e.target.style.backgroundColor = '#F7931E'}
-              onMouseOut={(e) => e.target.style.backgroundColor = '#71B34A'}
-            >
-              Register
-            </button>
+  type="submit"
+  style={{
+    width: '100%',
+    padding: '0.75rem',
+    backgroundColor: '#71B34A',
+    color: '#FFFFFF',
+    border: 'none',
+    borderRadius: '0.375rem',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    position: 'relative',
+  }}
+  disabled={isLoading}
+  onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#F7931E'}
+  onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#71B34A'}
+>
+  {isLoading ? (
+    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <svg
+        aria-hidden="true"
+        role="status"
+        className="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600"
+        viewBox="0 0 100 101"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M100 50.5c0-27.55-22.45-50-50-50S0 22.95 0 50.5 22.45 100 50 100s50-22.45 50-50z"
+          fill="#E5E5E5"
+        />
+        <path
+          d="M93.97 50.5c0-24.8-20.24-45.03-45.03-45.03S3.91 25.7 3.91 50.5 24.15 95.53 49.95 95.53 93.97 75.3 93.97 50.5z"
+          fill="#00BFFF"
+        />
+      </svg>
+      Processing...
+    </span>
+  ) : (
+    'Register'
+  )}
+</button>
+
             {isSuccess && (
-              <div style={{ color: '#4CAF50', marginTop: '10px', fontSize: '0.875rem' }}>
-                Registration successful! Redirecting...
-              </div>
+              <p style={{ color: '#4A4A4A', fontSize: '0.875rem', textAlign: 'center', marginTop: '10px' }}>
+                Registration successful!
+              </p>
             )}
           </form>
         </div>

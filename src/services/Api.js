@@ -1,17 +1,15 @@
-// api.js
-import axios from 'axios';
+// src/services/apiService.js
 
-const api = axios.create({
-  baseURL: 'http://localhost:10000',
-});
-
-// Add a request interceptor
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('authToken'); // Or from cookies/session
-  if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`;
+export const fetchProduceData = async () => {
+  try {
+    const response = await fetch('https://api.yourapp.com/produce');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching produce data:', error);
+    return {}; // Return an empty object or handle error as needed
   }
-  return config;
-}, (error) => Promise.reject(error));
-
-export default api;
+};

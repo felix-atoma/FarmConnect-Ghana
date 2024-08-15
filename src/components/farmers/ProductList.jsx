@@ -1,30 +1,39 @@
-// src/components/ProduceDetail.jsx
+// src/components/ProduceList.js
 
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { produceData } from '../customers/ProduceData';
+import React, { useEffect, useState } from 'react';
+import { fetchProduceData } from '../../services/Api'
 
-const ProduceDetail = () => {
-    const { id } = useParams(); // Get the ID from the URL
-    const produce = produceData[id];
+const ProduceList = () => {
+  const [produceData, setProduceData] = useState({});
 
-    if (!produce) {
-        return <div>Produce not found</div>;
-    }
+  useEffect(() => {
+    const getProduceData = async () => {
+      const data = await fetchProduceData();
+      setProduceData(data);
+    };
 
-    return (
-        <div>
-            <h1>{id}</h1>
-            {/* Render details for the produce item */}
+    getProduceData();
+  }, []);
+
+  return (
+    <div>
+      <h1>Produce List</h1>
+      <ul>
+        {Object.keys(produceData).map((produceName) => (
+          <li key={produceName}>
+            <h2>{produceName}</h2>
             <ul>
-                {Object.keys(produce.categories).map((category) => (
-                    <li key={category}>
-                        <strong>{category}</strong>: {produce.prices[category]}
-                    </li>
-                ))}
+              {produceData[produceName].categories.map((category) => (
+                <li key={category}>
+                  {category}: {produceData[produceName].prices[category]}
+                </li>
+              ))}
             </ul>
-        </div>
-    );
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
-export default ProduceDetail;
+export default ProduceList;
