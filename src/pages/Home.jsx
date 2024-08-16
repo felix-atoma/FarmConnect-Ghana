@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UnifiedSearchComponent from '../pages/UnfiedSearchComponent';
-import ImageCarousel from '../pages/CarouselItems';
+import ImageCarousel from '../pages/CarouselItems'; // Ensure this component is correctly implemented
 import { FaMapMarkerAlt, FaCartPlus, FaHeart, FaInfoCircle } from 'react-icons/fa';
+import Support from '../pages/Support'
 
 // Example images for the carousel with correct import
 import tomato from '../assets/tomato.webp';
@@ -15,6 +16,7 @@ import ginger from '../assets/ginger.jpeg';
 import cucumber from '../assets/cocumber.jpeg'; // Fixed typo
 import carrot from '../assets/carot.jpeg'; // Fixed typo
 import tomatomato from '../assets/tomatomato.webp';
+import headerImage from '../assets/womanatfarm.jpg'; // Import your header image
 
 const carouselImages = [
   tomato,
@@ -35,11 +37,11 @@ const products = [
   { name: 'Vegetable', price: 'GHS 12', image: vegetable },
   { name: 'Pepper', price: 'GHS 8', image: pepper },
   { name: 'Mart', price: 'GHS 20', image: mart },
-  { name: 'Laitua', price: 'GHS 18', image: laitua },
+  { name: 'Laitus', price: 'GHS 18', image: laitua },
   { name: 'Ginger', price: 'GHS 25', image: ginger },
   { name: 'Cucumber', price: 'GHS 5', image: cucumber },
   { name: 'Carrot', price: 'GHS 7', image: carrot },
-  { name: 'Tomatomato', price: 'GHS 9', image: tomatomato }
+  { name: 'Tomato', price: 'GHS 9', image: tomatomato }
 ];
 
 const Home = () => {
@@ -140,52 +142,31 @@ const Home = () => {
           font-size: 0.9rem;
         }
       `}</style>
+      
+      {/* Header with Full-Page Background Image */}
       <header style={{ 
-        backgroundColor: '#FFFFFF', 
-        padding: '40px',
-        borderRadius: '8px', 
-        marginBottom: '40px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        backgroundImage: `url(${headerImage})`, 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center',
+        width: '100vw',
+        height: '100vh',
+        position: 'relative',
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden'
       }}>
-        <div 
-          style={{ 
-            color: '#71B34A', 
-            textAlign: 'center',
-            marginBottom: '20px',
-            width: '100%',
-            maxWidth: '800px'
-          }}
-        >
-          <div 
-            onClick={() => navigate('/regions')} 
-            style={{ 
-              marginBottom: '10px', 
-              cursor: 'pointer', 
-              display: 'flex', 
-              justifyContent: 'center', 
-              alignItems: 'center',
-              gap: '5px',
-              fontSize: '1.5rem', 
-              color: '#71B34A'
-            }}
-          >
-            <FaMapMarkerAlt />
-            Find Regions
-          </div>
-
-          <h2 style={{ 
-            marginBottom: '20px',
-            fontSize: '2rem' 
-          }}>
-            Search for every farming produce in Ghana
-          </h2>
-          <UnifiedSearchComponent onSearch={handleSearch} />
-        </div>
+        <header style={{ color: '#333333', padding: '16px', textAlign: 'center', width: '100%',  }}>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold',color: '#FFFFFF'  }}>Welcome to FarmConnect Ghana</h1>
+        <p style={{ fontSize: '1.125rem', marginTop: '8px',color: '#FFFFFF' }}>Empowering Farmers, Connecting Markets, and Supporting Growth</p>
       </header>
-
+      </header>
+      <div style={{ 
+        marginBottom: '20px',
+        textAlign: 'center'
+      }}>
+        <UnifiedSearchComponent onSearch={handleSearch} />
+      </div>
       {/* Carousel Component */}
       <div style={{ 
         marginBottom: '20px',
@@ -194,6 +175,8 @@ const Home = () => {
       }}>
         <ImageCarousel images={carouselImages} />
       </div>
+
+     
 
       {/* Title and Category Links */}
       <div style={{ 
@@ -216,49 +199,79 @@ const Home = () => {
             textDecoration: 'none',
             color: '#71B34A',
             fontSize: '1rem'
-          }}>Category 1</a>
+          }}>Fruits</a>
           <a href="#category2" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
             color: '#71B34A',
             fontSize: '1rem'
-          }}>Category 2</a>
+          }}>Vegetables</a>
           <a href="#category3" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
             color: '#71B34A',
             fontSize: '1rem'
-          }}>Category 3</a>
+          }}>Roots and Tubers</a>
           <a href="#category4" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
             color: '#71B34A',
             fontSize: '1rem'
-          }}>Category 4</a>
+          }}>Cereals and grains</a>
+          <a href="#category4" style={{ 
+            margin: '0 10px',
+            textDecoration: 'none',
+            color: '#71B34A',
+            fontSize: '1rem'
+          }}>Legumes</a>
+          <a href="#category4" style={{ 
+            margin: '0 10px',
+            textDecoration: 'none',
+            color: '#71B34A',
+            fontSize: '1rem'
+          }}>Herbs and Spices</a>
+          <a href="#category4" style={{ 
+            margin: '0 10px',
+            textDecoration: 'none',
+            color: '#71B34A',
+            fontSize: '1rem'
+          }}>Nuts and Seeds</a>
+          <a href="#category4" style={{ 
+            margin: '0 10px',
+            textDecoration: 'none',
+            color: '#71B34A',
+            fontSize: '1rem'
+          }}>Animal products</a>
+          <a href="#category4" style={{ 
+            margin: '0 10px',
+            textDecoration: 'none',
+            color: '#71B34A',
+            fontSize: '1rem'
+          }}>Dairy products</a>
         </div>
       </div>
 
       {/* Product Image Cards */}
-      <div style={{ 
-        display: 'flex', 
-        flexWrap: 'wrap', 
-        gap: '20px' 
-      }}>
+      <div 
+        style={{ 
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between'
+        }}
+      >
         {products.map((product, index) => (
           <div 
-            key={index}
+            key={index} 
             className="product-card"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <img 
-              src={product.image} 
-              alt={product.name} 
-              className="product-image"
-            />
-            <div 
-              className="icon-overlay"
-            >
+            <img src={product.image} alt={product.name} className="product-image" />
+            <div className="product-info">
+              <h3>{product.name}</h3>
+              <p>{product.price}</p>
+            </div>
+            <div className="icon-overlay">
               <button onClick={() => handleIconClick('cart')}>
                 <FaCartPlus />
               </button>
@@ -269,15 +282,10 @@ const Home = () => {
                 <FaInfoCircle />
               </button>
             </div>
-            <div className="product-info">
-              <h3>{product.name}</h3>
-              <p>{product.price}</p>
-            </div>
           </div>
         ))}
       </div>
-
-      
+      <Support/>
     </div>
   );
 };
