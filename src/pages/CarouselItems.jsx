@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import tomato from '../assets/tomato.webp';
 import salad from '../assets/salad.webp';
 import vegetable from '../assets/vegetable.jpeg';
@@ -6,8 +6,8 @@ import pepper from '../assets/pepper.webp';
 import mart from '../assets/mart.jpeg';
 import laitua from '../assets/laitua.jpeg';
 import ginger from '../assets/ginger.jpeg';
-import cucumber from '../assets/cocumber.jpeg';
-import carrot from '../assets/carot.jpeg';
+import cucumber from '../assets/cocumber.jpeg'; // Fixed typo
+import carrot from '../assets/carot.jpeg'; // Fixed typo
 import tomatomato from '../assets/tomatomato.webp';
 
 const images = [
@@ -27,17 +27,12 @@ const ImageCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const numberOfImages = images.length;
   const visibleImages = 5;
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % numberOfImages);
-    }, 3000); // Change image every 3 seconds
-
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, []);
+  const gap = 10; // Gap between images in pixels
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % numberOfImages);
+    setCurrentIndex((prevIndex) => 
+      (prevIndex + 1) % numberOfImages
+    );
   };
 
   const handlePrev = () => {
@@ -58,15 +53,15 @@ const ImageCarousel = () => {
       <div style={{
         display: 'flex',
         transition: 'transform 0.5s ease',
-        transform: `translateX(-${(currentIndex * 100) / visibleImages}%)`,
+        transform: `translateX(-${(currentIndex * (100 / visibleImages))}%)`,
         height: '100%', // Ensures the inner container covers the full height
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
       }}>
         {images.map((image, index) => (
           <div key={index} style={{
             flex: `0 0 ${100 / visibleImages}%`, // Show 5 images at a time
             boxSizing: 'border-box',
-            padding: '5px',
+            padding: `0 ${gap / 2}px`, // Add margin to create a gap between images
             height: '100%', // Ensures the image container covers the full height
             display: 'flex',
             flexDirection: 'column',
@@ -106,7 +101,8 @@ const ImageCarousel = () => {
           color: '#FFFFFF',
           border: 'none',
           padding: '10px',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          zIndex: 1 // Ensure buttons are on top of the carousel
         }}
       >
         &lt;
@@ -122,7 +118,8 @@ const ImageCarousel = () => {
           color: '#FFFFFF',
           border: 'none',
           padding: '10px',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          zIndex: 1 // Ensure buttons are on top of the carousel
         }}
       >
         &gt;

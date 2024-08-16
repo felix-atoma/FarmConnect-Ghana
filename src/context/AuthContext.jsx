@@ -7,11 +7,20 @@ export const AuthProvider = ({ children }) => {
   const [userRole, setUserRole] = useState('');
 
   useEffect(() => {
-    // Check authentication status (e.g., from local storage or API)
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      setIsAuthenticated(true);
-      setUserRole(user.role); // Adjust based on your user object structure
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (user && user.role) {
+        setIsAuthenticated(true);
+        setUserRole(user.role);
+      } else {
+        setIsAuthenticated(false);
+        setUserRole(null);
+      }
+    } catch (error) {
+      console.error('Error parsing user data from local storage:', error);
+      setIsAuthenticated(false);
+      setUserRole(null);
     }
   }, []);
 

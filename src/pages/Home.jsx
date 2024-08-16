@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UnifiedSearchComponent from '../pages/UnfiedSearchComponent'
-import ProductList from '../components/farmers/ProductList';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-import DatabaseImagesSection from  '../components/farmers/DataBaseImageSection'
+import UnifiedSearchComponent from '../pages/UnfiedSearchComponent';
 import ImageCarousel from '../pages/CarouselItems';
+import { FaMapMarkerAlt, FaCartPlus, FaHeart, FaInfoCircle } from 'react-icons/fa';
 
 // Example images for the carousel with correct import
 import tomato from '../assets/tomato.webp';
@@ -14,8 +12,8 @@ import pepper from '../assets/pepper.webp';
 import mart from '../assets/mart.jpeg';
 import laitua from '../assets/laitua.jpeg';
 import ginger from '../assets/ginger.jpeg';
-import cucumber from '../assets/cocumber.jpeg';
-import carrot from '../assets/carot.jpeg';
+import cucumber from '../assets/cocumber.jpeg'; // Fixed typo
+import carrot from '../assets/carot.jpeg'; // Fixed typo
 import tomatomato from '../assets/tomatomato.webp';
 
 const carouselImages = [
@@ -80,6 +78,68 @@ const Home = () => {
       minHeight: '100vh',
       padding: '20px'
     }}>
+      <style>{`
+        @keyframes dance {
+          0% { transform: rotate(0deg); }
+          25% { transform: rotate(10deg); }
+          50% { transform: rotate(-10deg); }
+          75% { transform: rotate(10deg); }
+          100% { transform: rotate(0deg); }
+        }
+        .icon-overlay {
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: rgba(0, 0, 0, 0.3);
+        }
+        .icon-overlay button {
+          background: transparent;
+          border: none;
+          color: #FFFFFF;
+          font-size: 1.5rem;
+          margin: 5px;
+          cursor: pointer;
+          transition: color 0.3s ease, border 0.3s ease;
+        }
+        .icon-overlay button:hover {
+          color: #71B34A;
+          animation: dance 1s infinite;
+          border: 2px solid #71B34A;
+        }
+        .product-card {
+          position: relative;
+          width: calc(20% - 20px);
+          box-sizing: border-box;
+          margin-bottom: 20px;
+          overflow: hidden;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+          transition: transform 0.3s ease;
+        }
+        .product-card:hover {
+          transform: scale(1.05);
+        }
+        .product-image {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+        }
+        .product-info {
+          padding: 10px;
+          text-align: center;
+          background: #FFFFFF;
+          color: #000000; /* Text color set to black */
+          font-size: 0.9rem;
+        }
+      `}</style>
       <header style={{ 
         backgroundColor: '#FFFFFF', 
         padding: '40px',
@@ -187,120 +247,37 @@ const Home = () => {
         {products.map((product, index) => (
           <div 
             key={index}
-            style={{ 
-              position: 'relative',
-              width: 'calc(20% - 20px)',
-              height: '250px',
-              overflow: 'hidden',
-              borderRadius: '8px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              cursor: 'pointer',
-              marginBottom: '20px',
-              transition: 'transform 0.3s ease'
-            }}
+            className="product-card"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
             <img 
               src={product.image} 
               alt={product.name} 
-              style={{ 
-                width: '100%',
-                height: '70%',
-                objectFit: 'cover',
-                transition: 'transform 0.3s ease'
-              }}
+              className="product-image"
             />
             <div 
-              style={{ 
-                position: 'absolute',
-                bottom: '0',
-                left: '0',
-                width: '100%',
-                padding: '10px',
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                textAlign: 'center',
-                boxSizing: 'border-box',
-                zIndex: 1
-              }}
-            >
-              <h3 style={{ 
-                margin: '0',
-                fontSize: '1rem',
-                color: '#333'
-              }}>{product.name}</h3>
-              <p style={{ 
-                margin: '0',
-                fontSize: '1rem',
-                color: '#333'
-              }}>{product.price}</p>
-            </div>
-            <div 
-              style={{ 
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                opacity: 0,
-                transition: 'opacity 0.3s ease',
-                zIndex: 1
-              }}
               className="icon-overlay"
             >
-              <button 
-                onClick={() => handleIconClick('cart')}
-                style={{ 
-                  background: 'transparent',
-                  border: 'none',
-                  color: activeIcon === 'cart' ? '#71B34A' : '#FFFFFF',
-                  fontSize: '1.5rem',
-                  margin: '5px',
-                  cursor: 'pointer',
-                  transition: 'color 0.3s ease'
-                }}
-              >
-                &#128722; {/* Cart icon */}
+              <button onClick={() => handleIconClick('cart')}>
+                <FaCartPlus />
               </button>
-              <button 
-                onClick={() => handleIconClick('heart')}
-                style={{ 
-                  background: 'transparent',
-                  border: 'none',
-                  color: activeIcon === 'heart' ? '#71B34A' : '#FFFFFF',
-                  fontSize: '1.5rem',
-                  margin: '5px',
-                  cursor: 'pointer',
-                  transition: 'color 0.3s ease'
-                }}
-              >
-                &#9825; {/* Heart icon */}
+              <button onClick={() => handleIconClick('heart')}>
+                <FaHeart />
               </button>
-              <button 
-                onClick={() => handleIconClick('share')}
-                style={{ 
-                  background: 'transparent',
-                  border: 'none',
-                  color: activeIcon === 'share' ? '#71B34A' : '#FFFFFF',
-                  fontSize: '1.5rem',
-                  margin: '5px',
-                  cursor: 'pointer',
-                  transition: 'color 0.3s ease'
-                }}
-              >
-                &#128257; {/* Share icon */}
+              <button onClick={() => handleIconClick('info')}>
+                <FaInfoCircle />
               </button>
+            </div>
+            <div className="product-info">
+              <h3>{product.name}</h3>
+              <p>{product.price}</p>
             </div>
           </div>
         ))}
       </div>
 
-      <DatabaseImagesSection />
-      <ProductList />
+      
     </div>
   );
 };

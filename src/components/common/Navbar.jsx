@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { FaGlobe } from 'react-icons/fa'; // Import world map icon
-import LanguageSwitcher from './LanguageSwitcher';
+import { FaCartPlus, FaHeart } from 'react-icons/fa'; // Import cart and heart icons
 import { AuthContext } from '../../context/AuthContext'; 
 
 const navbarStyle = {
@@ -36,45 +35,21 @@ const linkHoverStyle = {
   textDecoration: 'underline',
 };
 
-const langButtonStyle = {
-  backgroundColor: 'transparent', // No background for icon button
-  border: 'none',
-  cursor: 'pointer',
+const iconStyle = {
+  color: '#FFFFFF', // White color for icons
   fontSize: '20px', // Adjust icon size
-  color: '#FFFFFF', // White color for the icon
-};
-
-const langDropdownStyle = {
-  backgroundColor: '#FFFFFF', // White background
-  color: '#000000', // Black text color
-  position: 'absolute',
-  right: '0',
-  marginTop: '10px',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-  borderRadius: '4px',
-  padding: '10px',
+  marginLeft: '10px',
+  cursor: 'pointer',
 };
 
 const Navbar = () => {
-  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const { isAuthenticated, userRole } = useContext(AuthContext); // Use AuthContext
-  const langMenuRef = useRef(null);
-
-  const toggleLangMenu = () => {
-    setIsLangMenuOpen(!isLangMenuOpen);
+  const [activeIcon, setActiveIcon] = useState(null);
+  
+  const handleIconClick = (iconType) => {
+    setActiveIcon(iconType);
+    // Add navigation logic or other actions here if needed
   };
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (langMenuRef.current && !langMenuRef.current.contains(event.target)) {
-        setIsLangMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   return (
     <nav style={navbarStyle}>
@@ -119,15 +94,15 @@ const Navbar = () => {
           </>
         )}
       </ul>
-      <div className="navbar-lang-switcher" style={{ position: 'relative' }} ref={langMenuRef}>
-        <button onClick={toggleLangMenu} style={langButtonStyle}>
-          <FaGlobe />
-        </button>
-        {isLangMenuOpen && (
-          <div style={langDropdownStyle}>
-            <LanguageSwitcher />
-          </div>
-        )}
+      <div className="navbar-icons" style={{ display: 'flex', alignItems: 'center' }}>
+        <FaCartPlus 
+          onClick={() => handleIconClick('cart')} 
+          style={iconStyle} 
+        />
+        <FaHeart 
+          onClick={() => handleIconClick('heart')} 
+          style={iconStyle} 
+        />
       </div>
     </nav>
   );
