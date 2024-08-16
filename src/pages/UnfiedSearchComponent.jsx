@@ -54,10 +54,20 @@ const UnifiedSearchComponent = ({ onSearch }) => {
           marginRight: '4px',
         }}
       >
-        <option value="">Cat</option>
+        <option value="">Category</option>
         <option value="fruits">Fruits</option>
         <option value="vegetables">Vegetables</option>
-        {/* Add more categories as needed */}
+        <option value="Root & Tubers">Root & Tubers</option>
+        <option value="Cereals & Grains">Cereals & Grains</option>
+        <option value="Legumes">Legumes</option>
+        <option value="Herbs & Spices">Herbs & Spices</option>
+        <option value="Nuts & Seeds">Nuts & Seeds</option>
+        <option value="Animal Products">Animal Products</option>
+        <option value="Dairy Products">Dairy Products</option>
+        <option value="Processed Foods">Processed Foods</option>
+        <option value="Others">Others</option>
+        
+        
       </select>
 
       <input 
@@ -84,7 +94,7 @@ const UnifiedSearchComponent = ({ onSearch }) => {
         name="description" 
         value={filters.description} 
         onChange={handleChange} 
-        placeholder="Desc"
+        placeholder="Description"
         style={{
           padding: '4px',
           border: '1px solid #ddd',
@@ -147,8 +157,8 @@ const UnifiedSearchComponent = ({ onSearch }) => {
           marginRight: '4px',
         }}
       >
-        <option value="asc">Asc</option>
-        <option value="desc">Desc</option>
+        <option value="asc">Sort Asc</option>
+        <option value="desc">Sort Desc</option>
       </select>
 
       <button 
