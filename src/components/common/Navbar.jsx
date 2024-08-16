@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCartPlus, FaHeart } from 'react-icons/fa'; // Import cart and heart icons
 import { AuthContext } from '../../context/AuthContext'; 
+import Logo from '../../assets/logo-no-background (1).png'; // Path to your logo
 
 const navbarStyle = {
   backgroundColor: '#71B34A', // Green background
@@ -9,11 +10,14 @@ const navbarStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  boxShadow: '0 2px 4px rgba(0,0,0,0.1)', // Optional shadow for better visibility
 };
 
 const logoStyle = {
   height: '40px', // Adjust as needed
+  filter: 'brightness(0) invert(1)', // Makes the logo white
 };
+
 
 const linksStyle = {
   listStyle: 'none',
@@ -45,7 +49,7 @@ const iconStyle = {
 const Navbar = () => {
   const { isAuthenticated, userRole } = useContext(AuthContext); // Use AuthContext
   const [activeIcon, setActiveIcon] = useState(null);
-  
+
   const handleIconClick = (iconType) => {
     setActiveIcon(iconType);
     // Add navigation logic or other actions here if needed
@@ -54,7 +58,7 @@ const Navbar = () => {
   return (
     <nav style={navbarStyle}>
       <div className="navbar-logo">
-        <img src="/path-to-your-logo.png" alt="FarmConnect Ghana" style={logoStyle} />
+        <img src={Logo} alt="FarmConnect Ghana" style={logoStyle} />
       </div>
       <ul style={linksStyle}>
         <li>
