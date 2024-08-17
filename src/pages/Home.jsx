@@ -16,7 +16,7 @@ import ginger from '../assets/ginger.jpeg';
 import cucumber from '../assets/cocumber.jpeg'; // Fixed typo
 import carrot from '../assets/carot.jpeg'; // Fixed typo
 import tomatomato from '../assets/tomatomato.webp';
-import headerImage from '../assets/womanatfarm.jpg'; // Import your header image
+
 
 const carouselImages = [
   tomato,

@@ -147,7 +147,7 @@ const Login = () => {
               position: 'fixed',
               top: '20px',
               right: '20px',
-              backgroundColor: '#4A90E2',
+              backgroundColor: '#4CAF50', // Changed to green
               color: '#FFFFFF',
               padding: '1rem',
               borderRadius: '0.5rem',
