@@ -76,7 +76,7 @@ const Home = () => {
 
   return (
     <div style={{ 
-      backgroundColor: '#FFFFFF', 
+       backgroundColor: '#FFFFFF', 
       minHeight: '100vh',
       padding: '20px'
     }}>
@@ -144,23 +144,9 @@ const Home = () => {
       `}</style>
       
       {/* Header with Full-Page Background Image */}
-      <header style={{ 
-        backgroundImage: `url(${headerImage})`, 
-        backgroundSize: 'cover', 
-        backgroundPosition: 'center',
-        width: '100vw',
-        height: '100vh',
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow: 'hidden'
-      }}>
-        <header style={{ color: '#333333', padding: '16px', textAlign: 'center', width: '100%',  }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold',color: '#FFFFFF'  }}>Welcome to FarmConnect Ghana</h1>
-        <p style={{ fontSize: '1.125rem', marginTop: '8px',color: '#FFFFFF' }}>Empowering Farmers, Connecting Markets, and Supporting Growth</p>
-      </header>
-      </header>
+      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', margin: '0', textAlign :'center' }}>
+            Find Fresh Farm Produce & <br /> Get Them Directly From <br /> Farm To Your Kitchen
+          </h1>
       <div style={{ 
         marginBottom: '20px',
         textAlign: 'center'
@@ -186,7 +172,7 @@ const Home = () => {
         <h2 style={{ 
           marginBottom: '20px',
           fontSize: '2rem'
-        }}>Featured Products</h2>
+        }}>Available Products</h2>
         <div>
           <a href="#all" style={{ 
             margin: '0 10px',
@@ -241,7 +227,13 @@ const Home = () => {
             textDecoration: 'none',
             color: '#71B34A',
             fontSize: '1rem'
-          }}>Animal products</a>
+          }}>Animal producuct</a>
+          <a href="#category4" style={{ 
+            margin: '0 10px',
+            textDecoration: 'none',
+            color: '#71B34A',
+            fontSize: '1rem'
+          }}>Dairy products</a>
           <a href="#category4" style={{ 
             margin: '0 10px',
             textDecoration: 'none',

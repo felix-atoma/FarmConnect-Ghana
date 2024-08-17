@@ -92,6 +92,8 @@ const App = () => (
                     <CustomerDashboard />
                   </PrivateRoute>
                 }
+                
+                
               />
 
               {/* Other routes */}
@@ -109,7 +111,7 @@ const App = () => (
               <Route path="/regions-page" element={<RegionsPage />} />
               <Route path="/district-detail" element={<DistrictDetail />} />
               <Route path="/search-results" element={<SearchResults />} />
-              
+
               {/* Redirect unknown paths to home */}
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>

@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
-import fruitImage from '../assets/man.webp'; 
+import fruitImage from '../assets/man.webp';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,23 +33,31 @@ const Login = () => {
       }
 
       const data = await response.json();
-      console.log('Login successful:', data); 
+      console.log('Login successful:', data);
       const userRole = data.user.role;
 
       // Log the role and navigate accordingly
       console.log(`User role: ${userRole}`);
 
-      // Redirect based on user role
-      if (userRole === 'farmer') {
-        console.log ('go to farmer-dashboard')
-        navigate('/farmer-dashboard');
-      } else if (userRole === 'customer') {
-        console.log('go to customer-dashboard')
-        navigate('/customer-dashboard');
-      } else {
-        console.log('go home')
-        navigate('/');
-      }
+      // Set accessToken & user in localStorage
+      localStorage.setItem('accessToken', JSON.stringify(data.accessToken));
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      // Login via Auth Context
+      login(userRole);
+
+      // Set success message and navigate
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        if (userRole === 'farmer') {
+          navigate('/farmer-dashboard');
+        } else if (userRole === 'customer') {
+          navigate('/customer-dashboard');
+        } else {
+          navigate('/');
+        }
+      }, 2000); // 2 seconds delay for the popup
     } catch (error) {
       setError(error.message || 'Login failed. Please check your email and password.');
     } finally {
@@ -119,26 +130,7 @@ const Login = () => {
               onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#71B34A'}
             >
               {loading ? (
-                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg
-                    aria-hidden="true"
-                    role="status"
-                    className="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5c0-27.55-22.45-50-50-50S0 22.95 0 50.5 22.45 100 50 100s50-22.45 50-50z"
-                      fill="#E5E5E5"
-                    />
-                    <path
-                      d="M93.97 50.5c0-24.8-20.24-45.03-45.03-45.03S3.91 25.7 3.91 50.5 24.15 95.53 49.95 95.53 93.97 75.3 93.97 50.5z"
-                      fill="#00BFFF"
-                    />
-                  </svg>
-                  Processing...
-                </span>
+                'Logging in...'
               ) : (
                 'Login'
               )}
@@ -150,9 +142,24 @@ const Login = () => {
               </a>.
             </p>
           </form>
+          {showSuccess && (
+            <div style={{
+              position: 'fixed',
+              top: '20px',
+              right: '20px',
+              backgroundColor: '#4A90E2',
+              color: '#FFFFFF',
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+              zIndex: '1000',
+            }}>
+              Registration successful. User logged in.
+            </div>
+          )}
         </div>
       </div>
-      
+
       <div style={{
         flex: '1',
         backgroundImage: `url(${fruitImage})`,

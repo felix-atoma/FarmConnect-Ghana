@@ -1,4 +1,3 @@
-// src/pages/FarmerDashboard.jsx
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import MapContainer from '../components/farmers/MapComponent';
@@ -12,10 +11,10 @@ const FarmerDashboard = () => {
       <Sidebar>
         <NavList>
           <NavItem><StyledLink to="profile">Farmer Profile</StyledLink></NavItem>
-          <NavItem><StyledLink to="products">Manage Products</StyledLink></NavItem>
-          <NavItem><StyledLink to="inquiries">Purchase Inquiries</StyledLink></NavItem>
+          <NavItem><StyledLink to="product-management">Manage Products</StyledLink></NavItem>
+          <NavItem><StyledLink to="purchase-inquiries">Purchase Inquiries</StyledLink></NavItem>
           <NavItem><StyledLink to="orders">Order Management</StyledLink></NavItem>
-          <NavItem><StyledLink to="communication">Customer Communication</StyledLink></NavItem>
+          <NavItem><StyledLink to="customer-communication">Customer Communication</StyledLink></NavItem>
           <NavItem><StyledLink to="feedback">Feedback</StyledLink></NavItem>
         </NavList>
       </Sidebar>

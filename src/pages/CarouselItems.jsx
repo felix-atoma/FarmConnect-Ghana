@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import tomato from '../assets/tomato.webp';
 import salad from '../assets/salad.webp';
 import vegetable from '../assets/vegetable.jpeg';
@@ -30,9 +30,7 @@ const ImageCarousel = () => {
   const gap = 10; // Gap between images in pixels
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => 
-      (prevIndex + 1) % numberOfImages
-    );
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % numberOfImages);
   };
 
   const handlePrev = () => {
@@ -41,61 +39,90 @@ const ImageCarousel = () => {
     );
   };
 
+  // Automatically move to the next image every 3 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => {
+        // Check if the current index is the last image
+        if (prevIndex === numberOfImages - 1) {
+          return 0; // Reset to the first image
+        }
+        return prevIndex + 1; // Move to the next image
+      });
+    }, 3000); // Adjust time as needed (3000 ms = 3 seconds)
+
+    // Clear interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [numberOfImages]);
+
   return (
-    <div style={{ 
-      position: 'relative', 
-      width: '100%', 
-      height: '300px', // Adjust the height as needed
-      overflow: 'hidden',
-      border: '1px solid #ddd',
-      boxSizing: 'border-box'
-    }}>
-      <div style={{
-        display: 'flex',
-        transition: 'transform 0.5s ease',
-        transform: `translateX(-${(currentIndex * (100 / visibleImages))}%)`,
-        height: '100%', // Ensures the inner container covers the full height
-        boxSizing: 'border-box',
-      }}>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '300px', // Adjust the height as needed
+        overflow: 'hidden',
+        border: '1px solid #ddd',
+        boxSizing: 'border-box'
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          transition: 'transform 0.5s ease',
+          transform: `translateX(-${(currentIndex * (100 / visibleImages))}%)`,
+          height: '100%', // Ensures the inner container covers the full height
+          boxSizing: 'border-box',
+        }}
+      >
         {images.map((image, index) => (
-          <div key={index} style={{
-            flex: `0 0 ${100 / visibleImages}%`, // Show 5 images at a time
-            boxSizing: 'border-box',
-            padding: `0 ${gap / 2}px`, // Add margin to create a gap between images
-            height: '100%', // Ensures the image container covers the full height
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end' // Align content to the bottom
-          }}>
-            <img src={image.src} alt={`Slide ${index}`} style={{
-              width: '100%',
-              height: '80%', // Adjust to leave space for text
-              objectFit: 'cover',
-              display: 'block',
-              border: 'none'
-            }} />
-            <div style={{
-              background: 'linear-gradient(0deg, rgba(255, 165, 0, 0.6), rgba(0, 128, 0, 0.6))', // Gradient from orange to green
-              color: '#FFFFFF',
-              textAlign: 'center',
-              padding: '5px',
-              fontSize: '0.9rem',
+          <div
+            key={index}
+            style={{
+              flex: `0 0 ${100 / visibleImages}%`, // Show 5 images at a time
+              boxSizing: 'border-box',
+              padding: `0 ${gap / 2}px`, // Add margin to create a gap between images
+              height: '100%', // Ensures the image container covers the full height
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center'
-            }}>
+              justifyContent: 'flex-end' // Align content to the bottom
+            }}
+          >
+            <img
+              src={image.src}
+              alt={`Slide ${index}`}
+              style={{
+                width: '100%',
+                height: '80%', // Adjust to leave space for text
+                objectFit: 'cover',
+                display: 'block',
+                border: 'none'
+              }}
+            />
+            <div
+              style={{
+                background: 'linear-gradient(0deg, rgba(255, 165, 0, 0.6), rgba(0, 128, 0, 0.6))', // Gradient from orange to green
+                color: '#FFFFFF',
+                textAlign: 'center',
+                padding: '5px',
+                fontSize: '0.9rem',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}
+            >
               <span>{image.name}</span>
               <span>{image.price}</span>
             </div>
           </div>
         ))}
       </div>
-      <button 
+      <button
         onClick={handlePrev}
-        style={{ 
-          position: 'absolute', 
-          left: '10px', 
-          top: '50%', 
+        style={{
+          position: 'absolute',
+          left: '10px',
+          top: '50%',
           transform: 'translateY(-50%)',
           backgroundColor: '#71B34A',
           color: '#FFFFFF',
@@ -107,12 +134,12 @@ const ImageCarousel = () => {
       >
         &lt;
       </button>
-      <button 
+      <button
         onClick={handleNext}
-        style={{ 
-          position: 'absolute', 
-          right: '10px', 
-          top: '50%', 
+        style={{
+          position: 'absolute',
+          right: '10px',
+          top: '50%',
           transform: 'translateY(-50%)',
           backgroundColor: '#71B34A',
           color: '#FFFFFF',

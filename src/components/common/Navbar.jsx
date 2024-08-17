@@ -83,14 +83,14 @@ const Navbar = () => {
           <>
             {userRole === 'farmer' && (
               <li>
-                <Link to="/farmer/dashboard" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
+                <Link to="/farmer-dashboard" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
                   Farmer Dashboard
                 </Link>
               </li>
             )}
             {userRole === 'customer' && (
               <li>
-                <Link to="/customer/dashboard" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
+                <Link to="/customer-dashboard" style={linkStyle} onMouseOver={(e) => Object.assign(e.target.style, linkHoverStyle)} onMouseOut={(e) => Object.assign(e.target.style, linkStyle)}>
                   Customer Dashboard
                 </Link>
               </li>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { FaSms, FaTimes } from 'react-icons/fa';
+import { FaCommentDots, FaTimes } from 'react-icons/fa';
 import { AiOutlineMail } from 'react-icons/ai';
 
 const Support = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleToggle = () => {
     setIsOpen(prev => !prev);
@@ -27,7 +29,7 @@ const Support = () => {
           position: 'relative', 
           width: '80px', 
           height: '80px', 
-          backgroundColor: '#71B34A', 
+          backgroundColor: '#FF6F61', // Changed to a contrasting color
           borderRadius: '50%', 
           display: 'flex', 
           justifyContent: 'center', 
@@ -36,7 +38,7 @@ const Support = () => {
         }}
         onClick={handleToggle}
       >
-        <FaSms size={30} color="#FFFFFF" />
+        <FaCommentDots size={30} color="#FFFFFF" />
         <span 
           style={{
             position: 'absolute',
@@ -44,12 +46,12 @@ const Support = () => {
             color: '#FFFFFF',
             fontSize: '0.875rem',
             fontWeight: 'bold',
-            backgroundColor: '#71B34A',
+            backgroundColor: '#FF6F61', // Changed to a contrasting color
             borderRadius: '5px',
             padding: '2px 5px',
           }}
         >
-          Support
+          Contact Support
         </span>
       </div>
 
@@ -63,27 +65,39 @@ const Support = () => {
             backgroundColor: '#F9F9F9',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
             borderRadius: '8px',
-            width: '250px',
+            width: '300px',
             padding: '15px',
             zIndex: 1000
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <AiOutlineMail size={24} color="#71B34A" />
-            <span style={{ fontWeight: 'bold' }}>Have your say!</span>
-            <FaTimes size={24} color="#71B34A" style={{ cursor: 'pointer' }} onClick={handleClose} />
+            <AiOutlineMail size={24} color="#FF6F61" />
+            <span style={{ fontWeight: 'bold' }}>Contact Us</span>
+            <FaTimes size={24} color="#FF6F61" style={{ cursor: 'pointer' }} onClick={handleClose} />
           </div>
           <p style={{ marginTop: '10px' }}>
-            Share your complaints, suggestions, and feedback to help us improve your experience.
+            Share your concerns, suggestions, or feedback to help us improve your experience.
           </p>
+          <input
+            type="text"
+            placeholder="Subject*"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            style={{ width: '100%', marginTop: '10px', borderRadius: '4px', border: '1px solid #ddd', padding: '5px' }}
+            required
+          />
           <textarea 
             rows="4" 
+            placeholder="Message*"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             style={{ width: '100%', marginTop: '10px', borderRadius: '4px', border: '1px solid #ddd', padding: '5px' }}
+            required
           />
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
             <button 
               style={{ 
-                backgroundColor: '#71B34A', 
+                backgroundColor: '#FF6F61', // Changed to a contrasting color
                 color: '#FFFFFF', 
                 border: 'none', 
                 borderRadius: '4px', 
