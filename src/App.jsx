@@ -27,6 +27,7 @@ import OrderHistory from './components/customers/OrderHistory';
 import CreateCustomerProfile from './components/customers/CreateCustomerProfile.jsx'
 import UpdateCustomerProfile from './components/customers/UpdateCustomerProfile.jsx';
 import CustomerMessages from './components/customers/CreateCustomerProfile.jsx';
+import CreateNewOrder from './components/customers/CreateOrder.jsx'
 
 import CancelOrder from './components/customers/CancelOrder.jsx'
 import UpdateOrder from './components/customers/UpdateOrder.jsx';
@@ -88,6 +89,7 @@ const router = createBrowserRouter([
           { path: 'profile/update', element: <UpdateCustomerProfile /> },
           { path: 'order-management/order-history', element: <OrderHistory /> },
           { path: 'order-management/cancel-order', element: <CancelOrder /> },
+          { path: 'order-management/new-order', element: <CreateNewOrder /> },
         
           { path: 'order-management/update-status', element: <UpdateOrder/> },
           { path: 'cart/add-item', element: <AddItemToCart /> },

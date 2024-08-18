@@ -1,4 +1,38 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const RemoveButton = styled.button`
+  background-color: #e60000; /* Red color for the button */
+  color: #ffffff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #c70000; /* Darker red on hover */
+  }
+
+  &:disabled {
+    background-color: #f0f0f0; /* Light gray for disabled state */
+    color: #a0a0a0; /* Gray text for disabled state */
+    cursor: not-allowed;
+  }
+`;
+
+const ErrorMessage = styled.p`
+  color: #e60000; /* Red color for error messages */
+  margin: 0;
+  font-weight: bold;
+`;
 
 const RemoveCartItem = ({ itemId, onRemoveSuccess }) => {
   const [errorMessage, setErrorMessage] = useState('');
@@ -44,12 +78,12 @@ const RemoveCartItem = ({ itemId, onRemoveSuccess }) => {
   };
 
   return (
-    <div>
-      <button onClick={handleRemoveItem} disabled={loading}>
+    <Container>
+      <RemoveButton onClick={handleRemoveItem} disabled={loading}>
         {loading ? 'Removing...' : 'Remove Item'}
-      </button>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-    </div>
+      </RemoveButton>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+    </Container>
   );
 };
 

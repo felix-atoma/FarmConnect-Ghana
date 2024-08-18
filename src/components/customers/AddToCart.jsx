@@ -1,4 +1,65 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff; /* White background for the container */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const Heading = styled.h2`
+  color: #4a4a4a; /* Dark gray color for the heading */
+  margin-bottom: 20px;
+  text-align: center;
+`;
+
+const FormGroup = styled.div`
+  margin-bottom: 15px;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 5px;
+  color: #4a4a4a; /* Dark gray color for the labels */
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+
+  &:focus {
+    border-color: #71b34a; /* Green border on focus */
+    outline: none;
+  }
+`;
+
+const Button = styled.button`
+  background-color: #f7931e; /* Orange color for the button */
+  color: #ffffff; /* White text color */
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #e67e22; /* Darker orange on hover */
+  }
+`;
+
+const Message = styled.p`
+  text-align: center;
+  font-weight: bold;
+  color: ${props => props.success ? '#4a4a4a' : '#e60000'}; /* Green for success, red for error */
+`;
 
 const AddToCart = () => {
   const [cartDetails, setCartDetails] = useState({
@@ -22,7 +83,7 @@ const AddToCart = () => {
     setErrorMessage('');
 
     try {
-      const response = await fetch('http://localhost:5179/api/customer/cart', {
+      const response = await fetch('https://farm-connect-api.onrender.com/api/customer/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,32 +121,32 @@ const AddToCart = () => {
   };
 
   return (
-    <div>
-      <h2>Add/Update Cart Item</h2>
+    <Container>
+      <Heading>Add/Update Cart Item</Heading>
       <form onSubmit={(e) => { e.preventDefault(); handleAddToCart(); }}>
-        <div>
-          <label>Customer ID:</label>
-          <input
+        <FormGroup>
+          <Label>Customer ID:</Label>
+          <Input
             type="text"
             name="customer"
             value={cartDetails.customer}
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <label>Product ID:</label>
-          <input
+        </FormGroup>
+        <FormGroup>
+          <Label>Product ID:</Label>
+          <Input
             type="text"
             name="product"
             value={cartDetails.product}
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <label>Quantity:</label>
-          <input
+        </FormGroup>
+        <FormGroup>
+          <Label>Quantity:</Label>
+          <Input
             type="number"
             name="quantity"
             value={cartDetails.quantity}
@@ -93,12 +154,12 @@ const AddToCart = () => {
             min="1"
             required
           />
-        </div>
-        <button type="submit">Add to Cart</button>
+        </FormGroup>
+        <Button type="submit">Add to Cart</Button>
       </form>
-      {message && <p style={{ color: 'green' }}>{message}</p>}
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-    </div>
+      {message && <Message success>{message}</Message>}
+      {errorMessage && <Message>{errorMessage}</Message>}
+    </Container>
   );
 };
 

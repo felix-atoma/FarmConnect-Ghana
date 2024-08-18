@@ -1,4 +1,50 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff; /* White background for the container */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const Heading = styled.h2`
+  color: #4a4a4a; /* Dark gray color for the heading */
+  margin-bottom: 20px;
+  text-align: center;
+`;
+
+const ErrorMessage = styled.p`
+  color: #e60000; /* Red color for error messages */
+  text-align: center;
+  font-weight: bold;
+`;
+
+const CartList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const CartItem = styled.li`
+  background-color: #f9f9f9; /* Light gray background for each item */
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const ItemDetail = styled.p`
+  margin: 5px 0;
+`;
+
+const EmptyMessage = styled.p`
+  text-align: center;
+  color: #4a4a4a; /* Dark gray color for the empty cart message */
+`;
 
 const CartItems = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -39,23 +85,23 @@ const CartItems = () => {
   }, []); // Empty dependency array means this effect runs once when the component mounts
 
   return (
-    <div>
-      <h2>Your Cart</h2>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      <ul>
+    <Container>
+      <Heading>Your Cart</Heading>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      <CartList>
         {cartItems.length > 0 ? (
           cartItems.map(item => (
-            <li key={item._id}>
-              <p>Product ID: {item.product}</p>
-              <p>Quantity: {item.quantity}</p>
-              <p>Added on: {new Date(item.createdAt).toLocaleDateString()}</p>
-            </li>
+            <CartItem key={item._id}>
+              <ItemDetail><strong>Product ID:</strong> {item.product}</ItemDetail>
+              <ItemDetail><strong>Quantity:</strong> {item.quantity}</ItemDetail>
+              <ItemDetail><strong>Added on:</strong> {new Date(item.createdAt).toLocaleDateString()}</ItemDetail>
+            </CartItem>
           ))
         ) : (
-          <p>Your cart is empty.</p>
+          <EmptyMessage>Your cart is empty.</EmptyMessage>
         )}
-      </ul>
-    </div>
+      </CartList>
+    </Container>
   );
 };
 
