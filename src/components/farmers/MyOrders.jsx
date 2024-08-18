@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 
-// Mock function to simulate API call
 const fetchOrders = async () => {
-  // Replace this with your API call
-  return [
-    { id: 1, product: 'Tomatoes', quantity: 50, status: 'Pending' },
-    { id: 2, product: 'Cucumbers', quantity: 30, status: 'Processing' },
-    { id: 3, product: 'Potatoes', quantity: 100, status: 'Completed' }
-  ];
+  try {
+    const response = await axios.get('/api/orders'); // API call to fetch orders
+    return response.data; // Assuming the API returns an array of orders
+  } catch (error) {
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          throw new Error('Unauthorized: Please log in to continue.');
+        case 403:
+          throw new Error('Forbidden: Insufficient permissions.');
+        case 500:
+          throw new Error('Internal server error: An error occurred while retrieving the orders.');
+        default:
+          throw new Error('An error occurred: Please try again later.');
+      }
+    } else {
+      throw new Error('Network error: Please check your connection.');
+    }
+  }
 };
 
 const MyOrders = () => {
@@ -22,7 +35,7 @@ const MyOrders = () => {
         const ordersData = await fetchOrders();
         setOrders(ordersData);
       } catch (err) {
-        setError('Failed to load orders.');
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -44,18 +57,20 @@ const MyOrders = () => {
           <thead>
             <tr>
               <TableHeader>ID</TableHeader>
-              <TableHeader>Product</TableHeader>
-              <TableHeader>Quantity</TableHeader>
-              <TableHeader>Status</TableHeader>
+              <TableHeader>Customer</TableHeader>
+              <TableHeader>Total Amount</TableHeader>
+              <TableHeader>Delivery Address</TableHeader>
             </tr>
           </thead>
           <tbody>
             {orders.map(order => (
-              <TableRow key={order.id}>
-                <TableCell>{order.id}</TableCell>
-                <TableCell>{order.product}</TableCell>
-                <TableCell>{order.quantity}</TableCell>
-                <TableCell>{order.status}</TableCell>
+              <TableRow key={order._id}>
+                <TableCell>{order._id}</TableCell>
+                <TableCell>{order.customer}</TableCell>
+                <TableCell>{order.totalAmount}</TableCell>
+                <TableCell>
+                  {order.deliveryAddress.addressLine1}, {order.deliveryAddress.addressLine2}, {order.deliveryAddress.city}, {order.deliveryAddress.state}, {order.deliveryAddress.country}, {order.deliveryAddress.postalCode}
+                </TableCell>
               </TableRow>
             ))}
           </tbody>

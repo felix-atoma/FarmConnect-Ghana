@@ -8,14 +8,42 @@ const DeleteProduct = ({ productId, onDeleteSuccess }) => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/api/products/${productId}`);
-      // Notify parent component about the successful deletion
-      onDeleteSuccess();
-      // Redirect to the product list or another page
-      navigate('/farmer-dashboard/product-management/all');
+      const response = await axios.delete(`/api/products/${productId}`);
+      if (response.status === 200) {
+        // Notify parent component about the successful deletion
+        onDeleteSuccess();
+        // Redirect to the product list or another page
+        navigate('/farmer-dashboard/product-management/all');
+        alert('Product deleted successfully!');
+      } else {
+        // Handle unexpected responses
+        alert('Unexpected response from server');
+      }
     } catch (error) {
+      if (error.response) {
+        // Handle errors based on response status
+        switch (error.response.status) {
+          case 401:
+            alert('Unauthorized: Please log in to continue.');
+            break;
+          case 403:
+            alert('Forbidden: You do not have access to this resource.');
+            break;
+          case 404:
+            alert('Product not found.');
+            break;
+          case 500:
+            alert('Internal server error: An error occurred while deleting the product.');
+            break;
+          default:
+            alert('An error occurred: Please try again later.');
+            break;
+        }
+      } else {
+        // Handle errors without response (e.g., network errors)
+        alert('An error occurred: Please check your network connection.');
+      }
       console.error('Error deleting product:', error);
-      alert('Failed to delete product');
     }
   };
 

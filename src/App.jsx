@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import FarmerDashboard from './pages/FarmerDashboard';
 import CustomerDashboard from './pages/CustomerDashboard';
 import PrivateRoute from './components/common/PrivateRouter';
-import CustomerProfile from './components/customers/CustomerProfile';
+
 import InitialScreen from './pages/InitialScreen';
 import MessageHolder from './pages/MessageHolder';
 import Support from './pages/Support';
@@ -24,8 +24,17 @@ import MyOrders from './components/farmers/MyOrders';
 import UpdateOrderStatus from './components/farmers/UpdateOrderStatus';
 import Messages from './components/farmers/Messages';
 import OrderHistory from './components/customers/OrderHistory';
-import InquiryForm from './components/customers/CustomerProfile';
-import CustomerMessages from './components/customers/CustomerMessages';
+import CreateCustomerProfile from './components/customers/CreateCustomerProfile.jsx'
+import UpdateCustomerProfile from './components/customers/UpdateCustomerProfile.jsx';
+import CustomerMessages from './components/customers/CreateCustomerProfile.jsx';
+
+import CancelOrder from './components/customers/CancelOrder.jsx'
+import UpdateOrder from './components/customers/UpdateOrder.jsx';
+import AddItemToCart from './components/customers/AddToCart.jsx'
+import ViewCartItems from './components/customers/ViewCart.jsx'
+import RemoveItemCart from './components/customers/RemoveCart.jsx'
+
+import ProductUpdate from './components/farmers/UpdateProduct.jsx'
 
 
 
@@ -61,6 +70,7 @@ const router = createBrowserRouter([
           { path: 'product-management/list', element: <ProductList/>},
           { path: 'order-management/my-orders', element: <MyOrders/>},
           { path: 'order-management/update-status', element: <UpdateOrderStatus/>},
+          { path: 'order-management/update-product', element: <ProductUpdate/>},
           { path: 'messages', element: <Messages /> },
           
           
@@ -74,9 +84,15 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         children: [
-          { path: 'profile', element: <CustomerProfile /> },
-          { path: 'orders', element: <OrderHistory /> },
-          { path: 'inquiries', element: <InquiryForm /> },
+          { path: 'profile/create', element: <CreateCustomerProfile /> },
+          { path: 'profile/update', element: <UpdateCustomerProfile /> },
+          { path: 'order-management/order-history', element: <OrderHistory /> },
+          { path: 'order-management/cancel-order', element: <CancelOrder /> },
+        
+          { path: 'order-management/update-status', element: <UpdateOrder/> },
+          { path: 'cart/add-item', element: <AddItemToCart /> },
+          { path: 'cart/view-items', element: <ViewCartItems /> },
+          { path: 'cart/remove-item', element: <RemoveItemCart/> },
           { path: 'messages', element: <CustomerMessages /> },
           
         ],

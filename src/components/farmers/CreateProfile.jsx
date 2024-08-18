@@ -3,23 +3,29 @@ import styled from 'styled-components';
 
 const CreateProfile = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    address: '',
-    produce: '',
-    experience: '',
-    passportPicture: null,
+    farmName: '',
+    farmAddress: '',
+    products: [],
+    farmType: '',
+    bankAccountDetails: '',
+    about: '',
+    farmPhotos: [],
   });
 
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-      ...(name === 'passportPicture' ? { passportPicture: files[0] } : {}),
-    }));
+    if (name === 'farmPhotos') {
+      setFormData((prevData) => ({
+        ...prevData,
+        farmPhotos: Array.from(files), // Convert FileList to Array
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   // Handle form submission
@@ -31,87 +37,90 @@ const CreateProfile = () => {
 
   return (
     <FormContainer>
-      <h2>Create Your Profile</h2>
+      <h2>Create Your Farm Profile</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label htmlFor="passportPicture">Upload Passport Picture</Label>
+          <Label htmlFor="farmName">Farm Name</Label>
+          <Input
+            type="text"
+            id="farmName"
+            name="farmName"
+            value={formData.farmName}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="farmAddress">Farm Address</Label>
+          <Input
+            type="text"
+            id="farmAddress"
+            name="farmAddress"
+            value={formData.farmAddress}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="products">Product IDs (comma-separated)</Label>
+          <Input
+            type="text"
+            id="products"
+            name="products"
+            value={formData.products.join(', ')} // Convert array to string for display
+            onChange={(e) => setFormData((prevData) => ({
+              ...prevData,
+              products: e.target.value.split(',').map(id => id.trim()), // Convert string to array
+            }))}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="farmType">Farm Type</Label>
+          <Input
+            type="text"
+            id="farmType"
+            name="farmType"
+            value={formData.farmType}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="bankAccountDetails">Bank Account Details</Label>
+          <Input
+            type="text"
+            id="bankAccountDetails"
+            name="bankAccountDetails"
+            value={formData.bankAccountDetails}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="about">About the Farm</Label>
+          <TextArea
+            id="about"
+            name="about"
+            value={formData.about}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="farmPhotos">Upload Farm Photos (up to 6)</Label>
           <FileInput
             type="file"
-            id="passportPicture"
-            name="passportPicture"
+            id="farmPhotos"
+            name="farmPhotos"
             accept="image/*"
+            multiple
             onChange={handleChange}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label htmlFor="firstName">First Name</Label>
-          <Input
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label htmlFor="lastName">Last Name</Label>
-          <Input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label htmlFor="email">Email Address</Label>
-          <Input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label htmlFor="address">Address</Label>
-          <Input
-            type="text"
-            id="address"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            required
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label htmlFor="produce">Nature of Food Crops or Livestock Produce</Label>
-          <Input
-            type="text"
-            id="produce"
-            name="produce"
-            value={formData.produce}
-            onChange={handleChange}
-            required
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label htmlFor="experience">Records or Experience</Label>
-          <TextArea
-            id="experience"
-            name="experience"
-            value={formData.experience}
-            onChange={handleChange}
-            required
           />
         </FormGroup>
 
@@ -123,10 +132,10 @@ const CreateProfile = () => {
 
 // Styled components
 const FormContainer = styled.div`
-  max-width: 600px; /* Reduced max-width */
+  max-width: 600px;
   margin: 0 auto;
-  padding: 20px; /* Reduced padding */
-  background: linear-gradient(135deg, #e9f5f2 0%, #c1e6e6 100%); /* Light teal gradient background */
+  padding: 20px;
+  background: linear-gradient(135deg, #e9f5f2 0%, #c1e6e6 100%);
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 `;
@@ -134,7 +143,7 @@ const FormContainer = styled.div`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Reduced gap between form elements */
+  gap: 15px;
 `;
 
 const FormGroup = styled.div`
@@ -148,17 +157,17 @@ const FormGroup = styled.div`
 const Label = styled.label`
   display: block;
   font-size: 1em;
-  margin-bottom: 6px; /* Reduced margin */
+  margin-bottom: 6px;
   color: #333;
   font-weight: bold;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px; /* Reduced padding */
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 6px;
-  font-size: 0.95em; /* Slightly smaller font size */
+  font-size: 0.95em;
   transition: border-color 0.3s, box-shadow 0.3s;
 
   &:focus {
@@ -174,11 +183,11 @@ const FileInput = styled(Input).attrs({ type: 'file' })`
 
 const TextArea = styled.textarea`
   width: 100%;
-  padding: 10px; /* Reduced padding */
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 6px;
-  font-size: 0.95em; /* Slightly smaller font size */
-  min-height: 100px; /* Reduced minimum height */
+  font-size: 0.95em;
+  min-height: 100px;
   resize: vertical;
   transition: border-color 0.3s, box-shadow 0.3s;
 
@@ -190,7 +199,7 @@ const TextArea = styled.textarea`
 `;
 
 const SubmitButton = styled.button`
-  padding: 10px 20px; /* Reduced padding */
+  padding: 10px 20px;
   border: none;
   background-color: #f7931e;
   color: #ffffff;

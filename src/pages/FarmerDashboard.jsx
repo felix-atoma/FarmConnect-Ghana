@@ -42,6 +42,7 @@ const FarmerDashboard = () => {
                 <SubNavItem><StyledLink to="product-management/edit">Edit Product</StyledLink></SubNavItem>
                 <SubNavItem><StyledLink to="product-management/delete">Delete Product</StyledLink></SubNavItem>
                 <SubNavItem><StyledLink to="product-management/list">Product List</StyledLink></SubNavItem>
+                <SubNavItem><StyledLink to="product-management/update">Product Update</StyledLink></SubNavItem>
               </SubNavList>
             </SectionCard>
           </NavItem>
