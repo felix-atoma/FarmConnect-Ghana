@@ -9,14 +9,16 @@ const CreateProfile = () => {
     address: '',
     produce: '',
     experience: '',
+    passportPicture: null,
   });
 
   // Handle form input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+      ...(name === 'passportPicture' ? { passportPicture: files[0] } : {}),
     }));
   };
 
@@ -31,6 +33,17 @@ const CreateProfile = () => {
     <FormContainer>
       <h2>Create Your Profile</h2>
       <Form onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label htmlFor="passportPicture">Upload Passport Picture</Label>
+          <FileInput
+            type="file"
+            id="passportPicture"
+            name="passportPicture"
+            accept="image/*"
+            onChange={handleChange}
+          />
+        </FormGroup>
+
         <FormGroup>
           <Label htmlFor="firstName">First Name</Label>
           <Input
@@ -110,59 +123,90 @@ const CreateProfile = () => {
 
 // Styled components
 const FormContainer = styled.div`
-  max-width: 600px;
+  max-width: 600px; /* Reduced max-width */
   margin: 0 auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px; /* Reduced padding */
+  background: linear-gradient(135deg, #e9f5f2 0%, #c1e6e6 100%); /* Light teal gradient background */
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  gap: 15px; /* Reduced gap between form elements */
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 15px;
+  padding: 15px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 `;
 
 const Label = styled.label`
-  font-size: 1em;
-  margin-bottom: 5px;
   display: block;
+  font-size: 1em;
+  margin-bottom: 6px; /* Reduced margin */
   color: #333;
+  font-weight: bold;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1em;
+  padding: 10px; /* Reduced padding */
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95em; /* Slightly smaller font size */
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  &:focus {
+    border-color: #71b34a;
+    box-shadow: 0 0 8px rgba(113, 179, 74, 0.4);
+    outline: none;
+  }
+`;
+
+const FileInput = styled(Input).attrs({ type: 'file' })`
+  background: #f8f8f8;
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1em;
-  min-height: 100px;
+  padding: 10px; /* Reduced padding */
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95em; /* Slightly smaller font size */
+  min-height: 100px; /* Reduced minimum height */
+  resize: vertical;
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  &:focus {
+    border-color: #71b34a;
+    box-shadow: 0 0 8px rgba(113, 179, 74, 0.4);
+    outline: none;
+  }
 `;
 
 const SubmitButton = styled.button`
-  padding: 10px 20px;
+  padding: 10px 20px; /* Reduced padding */
   border: none;
-  background-color: #71b34a; /* Green background */
+  background-color: #f7931e;
   color: #ffffff;
   font-size: 1em;
+  font-weight: bold;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
 
   &:hover {
-    background-color: #4a8a2c; /* Darker green on hover */
+    background-color: #e07b12;
+    transform: scale(1.02);
+  }
+
+  &:active {
+    background-color: #d06b00;
   }
 `;
 

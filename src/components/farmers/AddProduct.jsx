@@ -62,51 +62,56 @@ const AddProductForm = () => {
       {success && <SuccessMessage>{success}</SuccessMessage>}
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label htmlFor="name">Product Name:</Label>
+          <Label htmlFor="name">Product Name</Label>
           <Input
             type="text"
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder="Enter product name"
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="type">Type:</Label>
+          <Label htmlFor="type">Type</Label>
           <Input
             type="text"
             id="type"
             value={type}
             onChange={(e) => setType(e.target.value)}
+            placeholder="Enter product type"
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="price">Price:</Label>
+          <Label htmlFor="price">Price (GHS)</Label>
           <Input
             type="number"
             id="price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            placeholder="Enter price"
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="quantity">Quantity:</Label>
+          <Label htmlFor="quantity">Quantity</Label>
           <Input
             type="number"
             id="quantity"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
+            placeholder="Enter quantity"
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="description">Description:</Label>
+          <Label htmlFor="description">Description</Label>
           <Textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter product description"
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="image">Product Image:</Label>
+          <Label htmlFor="image">Product Image</Label>
           <Input
             type="file"
             id="image"
@@ -122,64 +127,88 @@ const AddProductForm = () => {
 
 // Styled components
 const FormContainer = styled.div`
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 500px;
+  margin: 20px auto;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  gap: 15px;
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 
 const Label = styled.label`
-  display: block;
+  font-size: 0.9em;
   font-weight: bold;
-  margin-bottom: 5px;
+  color: #333;
 `;
 
 const Input = styled.input`
-  width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #71b34a;
+    outline: none;
+  }
 `;
 
 const Textarea = styled.textarea`
-  width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  min-height: 100px;
   resize: vertical;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #71b34a;
+    outline: none;
+  }
 `;
 
 const SubmitButton = styled.button`
   padding: 10px 20px;
   border: none;
-  background-color: #71b34a; /* Green background for submit button */
-  color: white;
+  background-color: #f7931e; /* Orange background for submit button */
+  color: #ffffff;
   font-size: 1em;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 6px;
+  transition: background-color 0.3s, transform 0.2s;
 
   &:hover {
-    background-color: #5a9a3e; /* Darker green on hover */
+    background-color: #e67e22; /* Darker orange on hover */
+    transform: scale(1.02);
+  }
+
+  &:active {
+    background-color: #d35400; /* Even darker orange on click */
   }
 `;
 
 const ErrorMessage = styled.p`
-  color: #ff4d4d; /* Red color for error messages */
+  color: #e74c3c; /* Red color for error messages */
+  font-size: 0.9em;
 `;
 
 const SuccessMessage = styled.p`
-  color: #4caf50; /* Green color for success messages */
+  color: #2ecc71; /* Green color for success messages */
+  font-size: 0.9em;
 `;
 
 export default AddProductForm;
