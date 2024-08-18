@@ -1,18 +1,105 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { FaUser, FaBox, FaClipboardList, FaEnvelope } from 'react-icons/fa';
+import { AuthContext } from '../context/AuthContext'
 import styled from 'styled-components';
-import { FaUser, FaCogs, FaBox, FaClipboardList, FaEnvelope } from 'react-icons/fa';
+
+const DashboardContainer = styled.div`
+  display: flex;
+  background-color: #ffffff;
+`;
+
+const Sidebar = styled.nav`
+  width: 250px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const NavList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  flex: 1;
+`;
+
+const NavItem = styled.li`
+  margin-bottom: 20px;
+`;
+
+const SectionCard = styled.div`
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const Icon = styled.div`
+  font-size: 1.5em;
+  color: #71b34a;
+`;
+
+const SectionTitle = styled.h3`
+  font-size: 1.2em;
+  color: #4a4a4a;
+  margin: 0;
+`;
+
+const SubNavList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+const SubNavItem = styled.li`
+  margin-bottom: 10px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #71b34a;
+  display: block;
+  padding: 10px 0;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    color: #ffffff;
+    background-color: #f7931e;
+  }
+`;
+
+const Main = styled.main`
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff;
+`;
+
+const LogoutButton = styled.button`
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #ff4d4d;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #e60000;
+  }
+`;
 
 const FarmerDashboard = () => {
-  const navigate = useNavigate(); // Hook for programmatic navigation
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  // Function to handle logout logic
   const handleLogout = () => {
-    // Logic for logging out (e.g., clearing tokens, redirecting)
-    console.log('Logging out...');
-    // Example: Clear user data and redirect to the home page
-    // Clear authentication tokens or state here if needed
-    navigate('/'); // Redirect to home page
+    logout(); // Clear authentication state
+    navigate('/'); // Redirect to the home page
   };
 
   return (
@@ -41,8 +128,6 @@ const FarmerDashboard = () => {
                 <SubNavItem><StyledLink to="product-management/add">Add Product</StyledLink></SubNavItem>
                 <SubNavItem><StyledLink to="product-management/edit">Edit Product</StyledLink></SubNavItem>
                 <SubNavItem><StyledLink to="product-management/delete">Delete Product</StyledLink></SubNavItem>
-                <SubNavItem><StyledLink to="product-management/list">Product List</StyledLink></SubNavItem>
-                <SubNavItem><StyledLink to="product-management/update">Product Update</StyledLink></SubNavItem>
               </SubNavList>
             </SectionCard>
           </NavItem>
@@ -70,103 +155,13 @@ const FarmerDashboard = () => {
             </SectionCard>
           </NavItem>
         </NavList>
-        <LogoutButton onClick={handleLogout}>Logout</LogoutButton> {/* Logout button */}
+        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
       </Sidebar>
       <Main>
-        <Outlet /> {/* Render nested routes here */}
+        <Outlet />
       </Main>
     </DashboardContainer>
   );
 };
-
-// Styled components
-const DashboardContainer = styled.div`
-  display: flex;
-  background-color: #ffffff; /* White background for the dashboard */
-`;
-
-const Sidebar = styled.nav`
-  width: 250px;
-  background-color: #f4f4f4; /* Light gray background for the sidebar */
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const NavList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-  flex: 1;
-`;
-
-const NavItem = styled.li`
-  margin-bottom: 20px;
-`;
-
-const SectionCard = styled.div`
-  background-color: #ffffff; /* White background for cards */
-  border: 1px solid #e0e0e0; /* Light gray border */
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
-
-const Icon = styled.div`
-  font-size: 1.5em;
-  color: #71b34a; /* Green color for icons */
-`;
-
-const SectionTitle = styled.h3`
-  font-size: 1.2em;
-  color: #4a4a4a; /* Dark gray color for section titles */
-  margin: 0;
-`;
-
-const SubNavList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
-
-const SubNavItem = styled.li`
-  margin-bottom: 10px;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: #71b34a; /* Green color for links */
-  display: block;
-  padding: 10px 0;
-  border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
-
-  &:hover {
-    color: #ffffff; /* White text on hover */
-    background-color: #f7931e; /* Orange background on hover */
-  }
-`;
-
-const Main = styled.main`
-  flex: 1;
-  padding: 20px;
-  background-color: #ffffff; /* White background for the main content area */
-`;
-
-const LogoutButton = styled.button`
-  margin-top: 20px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #ff4d4d; /* Red background for logout button */
-  color: white;
-  font-size: 1em;
-  cursor: pointer;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #e60000; /* Darker red on hover */
-  }
-`;
 
 export default FarmerDashboard;
