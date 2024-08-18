@@ -177,67 +177,67 @@ const Home = () => {
           <a href="#all" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>All</a>
           <a href="#category1" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>Fruits</a>
           <a href="#category2" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>Vegetables</a>
           <a href="#category3" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>Roots and Tubers</a>
           <a href="#category4" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>Cereals and grains</a>
           <a href="#category4" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>Legumes</a>
           <a href="#category4" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>Herbs and Spices</a>
           <a href="#category4" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>Nuts and Seeds</a>
           <a href="#category4" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>Animal producuct</a>
           <a href="#category4" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>Dairy products</a>
           <a href="#category4" style={{ 
             margin: '0 10px',
             textDecoration: 'none',
-            color: '#71B34A',
+            color: 'black',
             fontSize: '1rem'
           }}>Dairy products</a>
         </div>

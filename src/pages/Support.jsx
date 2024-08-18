@@ -6,19 +6,57 @@ const Support = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [statusMessage, setStatusMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleToggle = () => {
     setIsOpen(prev => !prev);
   };
 
-  const handleSend = () => {
-    // Implement send message functionality here
-    alert('Message sent!');
-    setIsOpen(false);
-  };
-
   const handleClose = () => {
     setIsOpen(false);
+    setStatusMessage('');
+    setErrorMessage('');
+  };
+
+  const handleSend = async () => {
+    setStatusMessage('');
+    setErrorMessage('');
+    setLoading(true);
+
+    try {
+      const response = await fetch('https://farm-connect-api.onrender.com/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming JWT is stored in local storage
+        },
+        body: JSON.stringify({ subject, message })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setStatusMessage('Feedback submitted successfully');
+        // Optionally, clear the form fields
+        setSubject('');
+        setMessage('');
+      } else {
+        const errorData = await response.json();
+        switch (response.status) {
+          case 400:
+            setErrorMessage(`Invalid feedback data: ${errorData.message}`);
+            break;
+          default:
+            setErrorMessage('An unexpected error occurred.');
+        }
+      }
+    } catch (error) {
+      setErrorMessage('Network error. Please check your connection.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -29,7 +67,7 @@ const Support = () => {
           position: 'relative', 
           width: '80px', 
           height: '80px', 
-          backgroundColor: '#FF6F61', // Changed to a contrasting color
+          backgroundColor: '#FF6F61', 
           borderRadius: '50%', 
           display: 'flex', 
           justifyContent: 'center', 
@@ -46,7 +84,7 @@ const Support = () => {
             color: '#FFFFFF',
             fontSize: '0.875rem',
             fontWeight: 'bold',
-            backgroundColor: '#FF6F61', // Changed to a contrasting color
+            backgroundColor: '#FF6F61',
             borderRadius: '5px',
             padding: '2px 5px',
           }}
@@ -97,7 +135,7 @@ const Support = () => {
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
             <button 
               style={{ 
-                backgroundColor: '#FF6F61', // Changed to a contrasting color
+                backgroundColor: '#FF6F61',
                 color: '#FFFFFF', 
                 border: 'none', 
                 borderRadius: '4px', 
@@ -106,8 +144,9 @@ const Support = () => {
                 marginRight: '10px'
               }}
               onClick={handleSend}
+              disabled={loading}
             >
-              Send
+              {loading ? 'Sending...' : 'Send'}
             </button>
             <button 
               style={{ 
@@ -123,6 +162,8 @@ const Support = () => {
               Cancel
             </button>
           </div>
+          {statusMessage && <p style={{ color: '#28a745', marginTop: '10px' }}>{statusMessage}</p>}
+          {errorMessage && <p style={{ color: '#e60000', marginTop: '10px' }}>{errorMessage}</p>}
         </div>
       )}
     </div>

@@ -34,8 +34,8 @@ const AddProductForm = () => {
         formData.append('image', image);
       }
 
-      // Replace with your API endpoint to add a product
-      await axios.post('/api/farmer/products', formData, {
+      // Update with the correct API endpoint
+      await axios.post('https://farm-connect-api.onrender.com/api/farmer/products', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
