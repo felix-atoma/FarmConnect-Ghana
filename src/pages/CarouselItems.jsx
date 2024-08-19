@@ -6,7 +6,7 @@ import pepper from '../assets/pepper.webp';
 import mart from '../assets/mart.jpeg';
 import laitua from '../assets/laitua.jpeg';
 import ginger from '../assets/ginger.jpeg';
-import cucumber from '../assets/cocumber.jpeg'; // Fixed typo
+import mango from '../assets/mango-8283268_1280.webp'; // Fixed typo
 import carrot from '../assets/carot.jpeg'; // Fixed typo
 import tomatomato from '../assets/tomatomato.webp';
 
@@ -18,7 +18,7 @@ const images = [
   { src: mart, name: 'Mart', price: 'GHS 20' },
   { src: laitua, name: 'Laitua', price: 'GHS 18' },
   { src: ginger, name: 'Ginger', price: 'GHS 25' },
-  { src: cucumber, name: 'Cucumber', price: 'GHS 7' },
+  { src: mango, name: 'Cucumber', price: 'GHS 7' },
   { src: carrot, name: 'Carrot', price: 'GHS 5' },
   { src: tomatomato, name: 'Tomato Tomato', price: 'GHS 22' }
 ];
