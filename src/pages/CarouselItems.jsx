@@ -16,11 +16,11 @@ const images = [
   { src: vegetable, name: 'Vegetable', price: 'GHS 12' },
   { src: pepper, name: 'Pepper', price: 'GHS 8' },
   { src: mart, name: 'Mart', price: 'GHS 20' },
-  { src: laitua, name: 'Laitua', price: 'GHS 18' },
+  { src: laitua, name: 'Laitus', price: 'GHS 18' },
   { src: ginger, name: 'Ginger', price: 'GHS 25' },
-  { src: mango, name: 'Cucumber', price: 'GHS 7' },
+  { src: mango, name: 'Mango', price: 'GHS 7' },
   { src: carrot, name: 'Carrot', price: 'GHS 5' },
-  { src: tomatomato, name: 'Tomato Tomato', price: 'GHS 22' }
+  { src: tomatomato, name: 'Tomato ', price: 'GHS 22' }
 ];
 
 const ImageCarousel = () => {

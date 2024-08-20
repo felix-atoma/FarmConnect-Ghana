@@ -4,51 +4,56 @@ import styled from 'styled-components';
 const Container = styled.div`
   max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
   background-color: #ffffff; /* White background for the container */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Heading = styled.h2`
-  color: #4a4a4a; /* Dark gray color for the heading */
+  color: #333333; /* Dark gray color for the heading */
   margin-bottom: 20px;
   text-align: center;
+  font-size: 1.8em;
+  font-weight: bold;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 `;
 
 const Label = styled.label`
-  font-size: 1em;
-  color: #333; /* Dark gray for the label text */
+  font-size: 1.1em;
+  color: #4a4a4a; /* Medium gray for the label text */
+  font-weight: 600;
 `;
 
 const Input = styled.input`
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 1em;
   color: #333;
+  background-color: #f9f9f9;
   &:focus {
     border-color: #71b34a; /* Green border on focus */
     outline: none;
+    background-color: #ffffff;
   }
 `;
 
 const Button = styled.button`
-  padding: 15px;
+  padding: 12px;
   border: none;
   background-color: #71b34a; /* Green background */
-  color: #fff;
-  font-size: 1em;
-  border-radius: 4px;
+  color: #ffffff;
+  font-size: 1.1em;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
-  
+
   &:hover {
     background-color: #5c9a2e; /* Darker green on hover */
     transform: scale(1.05); /* Slightly enlarge on hover */
@@ -60,6 +65,7 @@ const Message = styled.p`
   font-size: 1em;
   margin-top: 20px;
   color: ${({ type }) => (type === 'error' ? '#e60000' : '#71b34a')}; /* Red for errors, green for success */
+  font-weight: 500;
 `;
 
 const UpdateCustomerProfile = () => {

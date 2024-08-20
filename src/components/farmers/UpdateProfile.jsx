@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 
 const UpdateFarmerProfile = () => {
   const [formData, setFormData] = useState({
     farmName: '',
     farmAddress: '',
-    products: [],
+    products: '',
     farmType: '',
     bankAccountDetails: '',
     about: '',
@@ -64,12 +63,78 @@ const UpdateFarmerProfile = () => {
     }
   };
 
+  const formContainerStyle = {
+    padding: '30px',
+    backgroundColor: '#f9f9f9',
+    maxWidth: '700px',
+    margin: 'auto',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  };
+
+  const formGroupStyle = {
+    marginBottom: '20px',
+  };
+
+  const labelStyle = {
+    display: 'block',
+    fontSize: '0.9em',
+    marginBottom: '5px',
+    fontWeight: '600',
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '10px',
+    border: '1px solid #ddd',
+    borderRadius: '4px',
+    fontSize: '1em',
+    boxSizing: 'border-box',
+  };
+
+  const textareaStyle = {
+    width: '100%',
+    padding: '10px',
+    border: '1px solid #ddd',
+    borderRadius: '4px',
+    fontSize: '1em',
+    boxSizing: 'border-box',
+    height: '100px',
+  };
+
+  const submitButtonStyle = {
+    padding: '12px 25px',
+    backgroundColor: '#4CAF50', // Green background for submit button
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    fontSize: '1em',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
+  };
+
+  const submitButtonHoverStyle = {
+    backgroundColor: '#45a049', // Darker green on hover
+  };
+
+  const successMessageStyle = {
+    color: '#4CAF50',
+    marginTop: '10px',
+    fontSize: '1em',
+  };
+
+  const errorMessageStyle = {
+    color: '#f44336',
+    marginTop: '10px',
+    fontSize: '1em',
+  };
+
   return (
-    <ProfileFormContainer>
-      <h2>Update Farmer Profile</h2>
+    <div style={formContainerStyle}>
+      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Update Farmer Profile</h2>
       <form onSubmit={handleSubmit}>
-        <FormGroup>
-          <label htmlFor="farmName">Farm Name</label>
+        <div style={formGroupStyle}>
+          <label htmlFor="farmName" style={labelStyle}>Farm Name</label>
           <input
             type="text"
             id="farmName"
@@ -77,10 +142,11 @@ const UpdateFarmerProfile = () => {
             value={formData.farmName}
             onChange={handleChange}
             required
+            style={inputStyle}
           />
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="farmAddress">Farm Address</label>
+        </div>
+        <div style={formGroupStyle}>
+          <label htmlFor="farmAddress" style={labelStyle}>Farm Address</label>
           <input
             type="text"
             id="farmAddress"
@@ -88,49 +154,54 @@ const UpdateFarmerProfile = () => {
             value={formData.farmAddress}
             onChange={handleChange}
             required
+            style={inputStyle}
           />
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="products">Products (comma separated IDs)</label>
+        </div>
+        <div style={formGroupStyle}>
+          <label htmlFor="products" style={labelStyle}>Products (comma separated IDs)</label>
           <input
             type="text"
             id="products"
             name="products"
             value={formData.products}
             onChange={handleChange}
+            style={inputStyle}
           />
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="farmType">Farm Type</label>
+        </div>
+        <div style={formGroupStyle}>
+          <label htmlFor="farmType" style={labelStyle}>Farm Type</label>
           <input
             type="text"
             id="farmType"
             name="farmType"
             value={formData.farmType}
             onChange={handleChange}
+            style={inputStyle}
           />
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="bankAccountDetails">Bank Account Details</label>
+        </div>
+        <div style={formGroupStyle}>
+          <label htmlFor="bankAccountDetails" style={labelStyle}>Bank Account Details</label>
           <input
             type="text"
             id="bankAccountDetails"
             name="bankAccountDetails"
             value={formData.bankAccountDetails}
             onChange={handleChange}
+            style={inputStyle}
           />
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="about">About</label>
+        </div>
+        <div style={formGroupStyle}>
+          <label htmlFor="about" style={labelStyle}>About</label>
           <textarea
             id="about"
             name="about"
             value={formData.about}
             onChange={handleChange}
+            style={textareaStyle}
           />
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="farmPhotos">Farm Photos</label>
+        </div>
+        <div style={formGroupStyle}>
+          <label htmlFor="farmPhotos" style={labelStyle}>Farm Photos</label>
           <input
             type="file"
             id="farmPhotos"
@@ -138,51 +209,23 @@ const UpdateFarmerProfile = () => {
             accept="image/*"
             multiple
             onChange={handleChange}
+            style={{ border: 'none', padding: '0', background: 'transparent' }}
           />
-        </FormGroup>
-        <SubmitButton type="submit" disabled={loading}>
+        </div>
+        <button
+          type="submit"
+          style={submitButtonStyle}
+          onMouseOver={(e) => (e.currentTarget.style.backgroundColor = submitButtonHoverStyle.backgroundColor)}
+          onMouseOut={(e) => (e.currentTarget.style.backgroundColor = submitButtonStyle.backgroundColor)}
+          disabled={loading}
+        >
           {loading ? 'Updating...' : 'Update Profile'}
-        </SubmitButton>
-        {message && <SuccessMessage>{message}</SuccessMessage>}
-        {error && <ErrorMessage>{error}</ErrorMessage>}
+        </button>
+        {message && <p style={successMessageStyle}>{message}</p>}
+        {error && <p style={errorMessageStyle}>{error}</p>}
       </form>
-    </ProfileFormContainer>
+    </div>
   );
 };
-
-// Styled components
-const ProfileFormContainer = styled.div`
-  padding: 20px;
-  background-color: #ffffff;
-  max-width: 600px;
-  margin: auto;
-`;
-
-const FormGroup = styled.div`
-  margin-bottom: 15px;
-`;
-
-const SubmitButton = styled.button`
-  padding: 10px 20px;
-  background-color: #71b34a; /* Green background for submit button */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #5a9a36; /* Darker green on hover */
-  }
-`;
-
-const SuccessMessage = styled.p`
-  color: #4caf50; /* Green text for success message */
-`;
-
-const ErrorMessage = styled.p`
-  color: #f44336; /* Red text for error message */
-`;
 
 export default UpdateFarmerProfile;

@@ -5,7 +5,12 @@ import styled from 'styled-components';
 const fetchOrders = async () => {
   try {
     const response = await axios.get('/api/orders'); // API call to fetch orders
-    return response.data; // Assuming the API returns an array of orders
+    // Ensure the response data is an array
+    if (Array.isArray(response.data)) {
+      return response.data;
+    } else {
+      throw new Error('Unexpected data format: Orders data should be an array.');
+    }
   } catch (error) {
     if (error.response) {
       switch (error.response.status) {
@@ -69,7 +74,7 @@ const MyOrders = () => {
                 <TableCell>{order.customer}</TableCell>
                 <TableCell>{order.totalAmount}</TableCell>
                 <TableCell>
-                  {order.deliveryAddress.addressLine1}, {order.deliveryAddress.addressLine2}, {order.deliveryAddress.city}, {order.deliveryAddress.state}, {order.deliveryAddress.country}, {order.deliveryAddress.postalCode}
+                  {order.deliveryAddress?.addressLine1}, {order.deliveryAddress?.addressLine2}, {order.deliveryAddress?.city}, {order.deliveryAddress?.state}, {order.deliveryAddress?.country}, {order.deliveryAddress?.postalCode}
                 </TableCell>
               </TableRow>
             ))}

@@ -136,10 +136,10 @@ const products = [
   { name: 'Yam', price: 'GHS 30', image: yam },
   { name: 'Yam', price: 'GHS 25', image: yam2 },
   { name: 'Sweet Potato', price: 'GHS 18', image: sweet },
-  { name: 'Yuca', price: 'GHS 20', image: yuca },
+  { name: 'cassava', price: 'GHS 20', image: yuca },
   { name: 'Yam', price: 'GHS 28', image: yam3 },
-  { name: 'Ghana Yam', price: 'GHS 35', image: ghana },
-  { name: 'Ghana Yam Case', price: 'GHS 40', image: ghanayam },
+  { name: ' Yam', price: 'GHS 35', image: ghana },
+  { name: 'Yam', price: 'GHS 40', image: ghanayam },
 
   // Cereals and Grains
   { name: 'Grains', price: 'GHS 22', image: grains },
@@ -174,12 +174,12 @@ const products = [
   { name: 'Mixed Nuts', price: 'GHS 45', image: nut7 },
 
   // Animal Products
-  { name: 'Beef', price: 'GHS 60', image: animal1 },
+  { name: 'Chicken', price: 'GHS 60', image: animal1 },
   { name: 'Chicken', price: 'GHS 50', image: animal2 },
-  { name: 'Fish', price: 'GHS 40', image: animal3 },
+  { name: 'cheese', price: 'GHS 40', image: animal3 },
   { name: 'Guinea Fowl', price: 'GHS 55', image: animal4 },
   { name: 'Fresh Fish', price: 'GHS 70', image: animal5 },
-  { name: 'Eggs', price: 'GHS 25', image: animal6 },
+  { name: ' Organic Eggs', price: 'GHS 25', image: animal6 },
   { name: 'Eggs', price: 'GHS 20', image: animal7 },
   { name: 'Beef Cut', price: 'GHS 80', image: animal8 },
 
@@ -190,13 +190,20 @@ const products = [
 ];
 
 const Home = () => {
-  const navigate = useNavigate();
+  
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [activeIcon, setActiveIcon] = useState(null);
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    navigate(`/category/${category}`);
+  };
 
   const handleSearch = (filters) => {
     const query = new URLSearchParams({
       query: filters.searchQuery,
-      category: filters.category,
+      category: filters.category || selectedCategory, // Use selectedCategory if filters.category is undefined
       description: filters.description,
       minPrice: filters.minPrice,
       maxPrice: filters.maxPrice,
@@ -218,6 +225,11 @@ const Home = () => {
   const handleMouseLeave = (e) => {
     e.currentTarget.querySelector('.icon-overlay').style.opacity = '0';
   };
+
+  const filteredProducts = selectedCategory === 'all'
+    ? products
+    : products.filter(product => product.category === selectedCategory);
+
 
   return (
     <div style={{ 
@@ -386,6 +398,7 @@ const Home = () => {
             fontSize: '1rem'
           }}>Dairy products</a>
         </div>
+        
       </div>
 
       {/* Product Image Cards */}
@@ -411,6 +424,7 @@ const Home = () => {
             <div className="icon-overlay">
               <button onClick={() => handleIconClick('cart')}>
                 <FaCartPlus />
+              
               </button>
               <button onClick={() => handleIconClick('heart')}>
                 <FaHeart />

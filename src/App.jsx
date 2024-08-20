@@ -26,7 +26,7 @@ import Messages from './components/farmers/Messages';
 import OrderHistory from './components/customers/OrderHistory';
 import CreateCustomerProfile from './components/customers/CreateCustomerProfile.jsx'
 import UpdateCustomerProfile from './components/customers/UpdateCustomerProfile.jsx';
-import CustomerMessages from './components/customers/CreateCustomerProfile.jsx';
+import CustomerMessages from './components/customers/Message.jsx'
 import CreateNewOrder from './components/customers/CreateOrder.jsx'
 
 import CancelOrder from './components/customers/CancelOrder.jsx'

@@ -11,6 +11,8 @@ const CreateProfile = () => {
     about: '',
     farmPhotos: [],
   });
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -29,10 +31,28 @@ const CreateProfile = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Here you can add the logic to send the data to the server or API
+    try {
+      // Simulate form submission
+      console.log('Form submitted:', formData);
+      // Simulate successful response
+      setSuccessMessage('Profile created successfully!');
+      setErrorMessage('');
+      // Clear form data after successful submission
+      setFormData({
+        farmName: '',
+        farmAddress: '',
+        products: [],
+        farmType: '',
+        bankAccountDetails: '',
+        about: '',
+        farmPhotos: [],
+      });
+    } catch (error) {
+      setErrorMessage('Failed to create profile. Please try again.');
+      setSuccessMessage('');
+    }
   };
 
   return (
@@ -126,6 +146,9 @@ const CreateProfile = () => {
 
         <SubmitButton type="submit">Create Profile</SubmitButton>
       </Form>
+
+      {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </FormContainer>
   );
 };
@@ -217,6 +240,20 @@ const SubmitButton = styled.button`
   &:active {
     background-color: #d06b00;
   }
+`;
+
+const SuccessMessage = styled.p`
+  color: #28a745; /* Green color for success */
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+`;
+
+const ErrorMessage = styled.p`
+  color: #dc3545; /* Red color for errors */
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
 `;
 
 export default CreateProfile;

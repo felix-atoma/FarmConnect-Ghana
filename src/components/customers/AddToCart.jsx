@@ -122,7 +122,7 @@ const AddToCart = () => {
 
   return (
     <Container>
-      <Heading>Add/Update Cart Item</Heading>
+      <Heading>Update Cart Item</Heading>
       <form onSubmit={(e) => { e.preventDefault(); handleAddToCart(); }}>
         <FormGroup>
           <Label>Customer ID:</Label>
