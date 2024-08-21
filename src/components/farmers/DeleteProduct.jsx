@@ -1,73 +1,135 @@
-import React from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-
-const DeleteProduct = ({ productId, onDeleteSuccess }) => {
-  const navigate = useNavigate(); // Hook for navigation
-
-  const handleDelete = async () => {
-    try {
-      const response = await axios.delete(`/api/products/${productId}`);
-      if (response.status === 200) {
-        // Notify parent component about the successful deletion
-        onDeleteSuccess();
-        // Redirect to the product list or another page
-        navigate('/farmer-dashboard/product-management/all');
-        alert('Product deleted successfully!');
-      } else {
-        // Handle unexpected responses
-        alert('Unexpected response from server');
-      }
-    } catch (error) {
-      if (error.response) {
-        // Handle errors based on response status
-        switch (error.response.status) {
-          case 401:
-            alert('Unauthorized: Please log in to continue.');
-            break;
-          case 403:
-            alert('Forbidden: You do not have access to this resource.');
-            break;
-          case 404:
-            alert('Product not found.');
-            break;
-          case 500:
-            alert('Internal server error: An error occurred while deleting the product.');
-            break;
-          default:
-            alert('An error occurred: Please try again later.');
-            break;
-        }
-      } else {
-        // Handle errors without response (e.g., network errors)
-        alert('An error occurred: Please check your network connection.');
-      }
-      console.error('Error deleting product:', error);
-    }
-  };
-
-  return (
-    <DeleteButton onClick={handleDelete}>
-      Delete Product
-    </DeleteButton>
-  );
-};
+import { AiFillDelete } from 'react-icons/ai'; // Import the delete icon
+import productData from '../../services/ProductData'; // Adjust the path according to your file structure
 
 // Styled components
-const DeleteButton = styled.button`
-  padding: 10px 20px;
-  background-color: #ff4d4d; /* Red background for delete button */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background-color 0.3s;
+const ProductList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+`;
+
+const ProductCard = styled.div`
+  position: relative;
+  background-color: #f4f4f4;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: calc(25% - 20px); /* 4 cards per row */
+  text-align: center;
+  overflow: hidden; /* Ensure content does not overflow */
+  transition: transform 0.3s, box-shadow 0.3s;
 
   &:hover {
-    background-color: #e60000; /* Darker red on hover */
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 `;
 
-export default DeleteProduct;
+const ProductImage = styled.img`
+  width: 100%;
+  height: 150px; /* Reduced height */
+  object-fit: cover;
+  border-radius: 4px;
+`;
+
+const ProductInfo = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  transition: opacity 0.3s;
+
+  ${ProductCard}:hover & {
+    opacity: 1;
+  }
+`;
+
+const DeleteButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #f56565;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+
+  &:hover {
+    background-color: #c53030;
+  }
+`;
+
+const Popup = styled.div`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+`;
+
+const DeleteProductComponent = () => {
+  const [products, setProducts] = useState(productData); // Initialize with product data
+  const [message, setMessage] = useState('');
+
+  // Handle delete product
+  const handleDelete = (productId) => {
+    const updatedProducts = products.filter(product => product.id !== productId);
+    setProducts(updatedProducts);
+    setMessage('Product deleted successfully');
+    setTimeout(() => setMessage(''), 3000); // Hide message after 3 seconds
+  };
+
+  return (
+    <div>
+      <h2 className="text-xl font-semibold mb-4">Manage Products</h2>
+
+      {message && (
+        <Popup>
+          {message}
+        </Popup>
+      )}
+
+      <ProductList>
+        {products.map(product => (
+          <ProductCard key={product.id}>
+            <ProductImage src={product.image} alt={product.name} />
+            <ProductInfo>
+              <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+              <p className="text-gray-300 mb-1">Price: {product.price} GHS</p>
+              <p className="text-gray-300 mb-2">Quantity: {product.quantity}</p>
+              <p className="text-gray-200 mb-2">{product.description}</p>
+              <p className="text-gray-400 mb-4">Date Added: {new Date(product.date).toLocaleDateString()}</p>
+              <DeleteButton onClick={() => handleDelete(product.id)}>
+                <AiFillDelete style={{ marginRight: '8px' }} />
+                Delete
+              </DeleteButton>
+            </ProductInfo>
+          </ProductCard>
+        ))}
+      </ProductList>
+    </div>
+  );
+};
+
+export default DeleteProductComponent;

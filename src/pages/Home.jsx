@@ -4,6 +4,7 @@ import UnifiedSearchComponent from '../pages/UnfiedSearchComponent';
 import ImageCarousel from '../pages/CarouselItems'; // Ensure this component is correctly implemented
 import { FaMapMarkerAlt, FaCartPlus, FaHeart, FaInfoCircle } from 'react-icons/fa';
 import Support from '../pages/Support'
+import SDGSection from '../pages/SDGSection'
 
 // Example images for the carousel with correct import
 import tomato from '../assets/tomato.webp';
@@ -133,8 +134,8 @@ const products = [
   { name: 'Carrot', price: 'GHS 7', image: carrotImg },
 
   // Roots and Tubers
-  { name: 'Yam', price: 'GHS 30', image: yam },
-  { name: 'Yam', price: 'GHS 25', image: yam2 },
+  { name: 'Cocoa Yam', price: 'GHS 30', image: yam },
+  { name: 'Sweet Potatoes', price: 'GHS 25', image: yam2 },
   { name: 'Sweet Potato', price: 'GHS 18', image: sweet },
   { name: 'cassava', price: 'GHS 20', image: yuca },
   { name: 'Yam', price: 'GHS 28', image: yam3 },

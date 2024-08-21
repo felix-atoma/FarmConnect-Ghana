@@ -26,12 +26,11 @@ const Support = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://farm-connect-api.onrender.com/api/feedback', {
+      const response = await fetch('https://run.mocky.io/v3/your-mock-api-id', { // Replace with your Mocky URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming JWT is stored in local storage
+          'Accept': 'application/json'
         },
         body: JSON.stringify({ subject, message })
       });

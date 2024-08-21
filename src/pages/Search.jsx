@@ -1,62 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { fetchSearchResults } from '../services/Search';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const SearchResults = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const SearchForm = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [category, setCategory] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const navigate = useNavigate();
 
-  const searchQuery = queryParams.get('query') || '';
-  const category = queryParams.get('category') || '';
-  const description = queryParams.get('description') || '';
-  const minPrice = queryParams.get('minPrice') || '';
-  const maxPrice = queryParams.get('maxPrice') || '';
-  const sortOrder = queryParams.get('sortOrder') || 'asc';
-
-  useEffect(() => {
-    const fetchResults = async () => {
-      try {
-        const response = await fetchSearchResults({
-          searchQuery,
-          category,
-          description,
-          minPrice,
-          maxPrice,
-          sortOrder,
-        });
-        setResults(response.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchResults();
-  }, [searchQuery, category, description, minPrice, maxPrice, sortOrder]);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/search?query=${searchQuery}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`);
+  };
 
   return (
-    <div>
-      <h1>Search Results</h1>
-      <ul>
-        {results.map(result => (
-          <li key={result.id}>
-            <h2>{result.name}</h2>
-            <p>{result.description}</p>
-            <p>Price: {result.price}</p>
-            <p>Category: {result.category}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Search by name..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <option value="">All Categories</option>
+        <option value="Fruits">Fruits</option>
+        <option value="Vegetables">Vegetables</option>
+        {/* Add more categories here */}
+      </select>
+      <input
+        type="number"
+        placeholder="Min Price"
+        value={minPrice}
+        onChange={(e) => setMinPrice(e.target.value)}
+      />
+      <input
+        type="number"
+        placeholder="Max Price"
+        value={maxPrice}
+        onChange={(e) => setMaxPrice(e.target.value)}
+      />
+      <button type="submit">Search</button>
+    </form>
   );
 };
 
-export default SearchResults;
+export default SearchForm;

@@ -36,6 +36,9 @@ import ViewCartItems from './components/customers/ViewCart.jsx'
 import RemoveItemCart from './components/customers/RemoveCart.jsx'
 
 import ProductUpdate from './components/farmers/UpdateProduct.jsx'
+import SearchForm from './pages/Search.jsx';
+import SearchResults from './pages/SearchResult.jsx';
+import ProductDetail from './pages/ProductDetail.jsx';
 
 
 
@@ -102,6 +105,9 @@ const router = createBrowserRouter([
       
       { path: '/initial-screen', element: <InitialScreen /> },
       { path: '/message-holder', element: <MessageHolder /> },
+      { path: '/', element: <SearchForm /> },
+      { path: '/search', element: <SearchResults /> },
+      { path: '/product/:id', element: <ProductDetail /> },
       { path: '*', element: <Home /> },
     ],
   },

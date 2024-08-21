@@ -34,8 +34,10 @@ const AddProductForm = () => {
         formData.append('image', image);
       }
 
-      // Update with the correct API endpoint
-      await axios.post('https://farm-connect-api.onrender.com/api/farmer/products', formData, {
+      // Mock API URL for testing
+      const mockApiUrl = 'https://mockapi.example.com/products'; // Replace with your mock API URL
+
+      await axios.post(mockApiUrl, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

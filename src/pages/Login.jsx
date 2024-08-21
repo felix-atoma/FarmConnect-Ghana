@@ -154,7 +154,7 @@ const Login = () => {
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
               zIndex: '1000',
             }}>
-              Registration successful. User logged in.
+               User logged in.
             </div>
           )}
         </div>
